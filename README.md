@@ -1,4 +1,5 @@
 # Nifty Cannon Contracts
+![Make it rain NFTs!](images/banner-800x200.png)
 
 Make it rain NFTs!
 
@@ -18,4 +19,4 @@ Supports
 # Architecture
 ## Diagrams
 ### ERC721 Airdrop Sequences
-![](diagrams/ERC721_Airdrop_Sequences.png)
+![ERC721 Airdrop Sequences](images/ERC721_Airdrop_Sequences.png)
