@@ -1,24 +1,22 @@
 {
-  "name": "nifty-cannon",
+  "name": "nifty-cannon-contracts",
   "version": "0.1.0",
   "description": "Nifty Cannon - Make it rain NFTs!",
   "author": "Cliff Hall",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cliffhall/nifty-cannon.git"
+    "url": "https://github.com/cliffhall/nifty-cannon-contracts.git"
   },
   "bugs": {
-    "url": "https://github.com/cliffhall/nifty-cannon/issues"
+    "url": "https://github.com/cliffhall/nifty-cannon-contracts/issues"
   },
-  "homepage": "https://github.com/cliffhall/nifty-cannon",
+  "homepage": "https://github.com/cliffhall/nifty-cannon-contracts",
   "keywords": [
     "blockchain",
     "ethereum",
     "nft",
     "erc721",
-    "react",
-    "javascript",
     "solidity"
   ],
   "scripts": {
@@ -27,6 +25,7 @@
     "sol:flatten": "./flatten-contracts.sh"
   },
   "dependencies": {
+    "firebase": "^7.14.0",
     "@openzeppelin/contracts": "^3.2.0",
     "@truffle/hdwallet-provider": "^1.0.30",
     "web3": "^1.2.5",
