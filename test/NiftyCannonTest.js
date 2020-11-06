@@ -1,28 +1,17 @@
-const NiftyCannon = artifacts.require("./NiftyCannon.sol");
-const BN = require('bn.js');
+const { expect } = require("chai");
 
-contract('NiftyCannon', function(accounts) {
+describe("NiftyCannon", function() {
 
-    let contract;
+    it("Should do something nice", async function() {
 
-    before(async () => {
+        const Greeter = await ethers.getContractFactory("NiftyCannon");
+        const greeter = await NiftyCannon.deploy("Hello, world!");
 
-        // Get the contract instance for this suite
-        contract = await NiftyCannon.new();
+        await greeter.deployed();
+        expect(await greeter.greet()).to.equal("Hello, world!");
 
+        await greeter.setGreeting("Hola, mundo!");
+        expect(await greeter.greet()).to.equal("Hola, mundo!");
     });
-
-    it("should allow ", async function() {
-
-        // Compute the expected result
-        const expected = `${trait1.svg}${trait2.svg}`;
-
-        // Get the concatenated string
-        const result = await contract._strConcat(trait1.svg, trait2.svg);
-
-        assert.equal(result, expected, "Concatenated string wasn't correct");
-
-    });
-
 
 });
