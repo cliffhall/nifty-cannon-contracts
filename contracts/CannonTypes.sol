@@ -17,7 +17,7 @@ contract CannonTypes {
     }
 
     /**
-     * @notice Target one recipient with one or more NFTs
+     * @notice Request to fire one or more NFTs out to a single recipient
      */
     struct Volley {
         Mode mode;
@@ -26,13 +26,4 @@ contract CannonTypes {
         address tokenContract;
         uint256[] tokenIds;
     }
-
-    /**
-     * @notice Target multiple recipients with one or more NFTs each
-     */
-    struct Fusillade {
-        Mode mode;
-        Volley[] volleys;
-    }
-
 }

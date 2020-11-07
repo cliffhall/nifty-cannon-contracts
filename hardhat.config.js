@@ -1,14 +1,16 @@
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
+const environments = require('./environments');
 module.exports = {
-  defaultNetwork: "rinkeby",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
+      forking: {
+        url: environments.rinkeby.alchemy,
+        blockNumber: 7507432
+      }
     },
     rinkeby: {
-      url: "https://rinkeby.infura.io/v3/cb414cbcbf4a49d2aad462642b345c7c",
-      accounts: {mnemonic: "rug exhibit tip arrange blind live outside reunion dignity beef hybrid cage"},
+      url: environments.rinkeby.infura,
+      accounts: {mnemonic: environments.rinkeby.mnemonic},
       gas: "auto"
     }
   },
