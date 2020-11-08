@@ -39,4 +39,4 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
 ![ERC721 Volley Sequences](images/ERC721_Volley_Sequences.png)
 
 ### ERC721 Will Call Pickup Sequences
-![ERC721 Will Call Pickup Sequences](images/ERC721_Willcall_Sequences.png)
+![ERC721 Will Call Pickup Sequences](images/ERC721_WillCall_Sequences.png)
