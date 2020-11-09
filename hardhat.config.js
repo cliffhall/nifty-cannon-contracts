@@ -1,12 +1,15 @@
 const environments = require('./environments');
+require("@nomiclabs/hardhat-waffle");
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
+      /*
       forking: {
         url: environments.rinkeby.alchemy,
         blockNumber: 7507432
       }
+      */
     },
     rinkeby: {
       url: environments.rinkeby.infura,
