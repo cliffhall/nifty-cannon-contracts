@@ -6,13 +6,13 @@ module.exports = {
     hardhat: {
       /*
       forking: {
-        url: environments.rinkeby.alchemy,
-        blockNumber: 7507432
+        url: environments.rinkeby.forkNode,
+        blockNumber: environments.rinkeby.forkBlock
       }
       */
     },
     rinkeby: {
-      url: environments.rinkeby.infura,
+      url: environments.rinkeby.txNode,
       accounts: {mnemonic: environments.rinkeby.mnemonic},
       gas: "auto"
     }

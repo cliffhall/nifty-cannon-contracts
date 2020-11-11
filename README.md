@@ -25,6 +25,50 @@ Work in Progress
 ### Unit Test Output
 ![Unit Test Output](images/Unit_Test_Output.png)
 
+# Developer Setup
+## Prerequisites
+### Install Node (also installs NPM)
+ * [Get Node](https://nodejs.org/en/download/)
+
+### Install required Node modules
+All NPM resources are project-local. No global installs required. 
+
+```
+cd path/to/nifty-cannon-contracts
+npm install
+```
+
+### Configure Environment
+Create a file called `environments.js` with the following content for each network environment.
+* `forkNode`: the url endpoint for forking the ethereum network
+* `forkBlock`: the block to fork the network ethereum from
+* `txNode`: the endpoint for sending ethereum transactions
+* `mnemonic`: a valid ethereum HD wallet seed phrase
+
+```javascript
+module.exports = {
+
+    "rinkeby": {
+        "forkNode": "https://eth-rinkeby.alchemyapi.io/v2/<YOUR_ALCHEMY_API_KEY>",
+        "txNode": "https://rinkeby.infura.io/v3/<YOUR_INFURA_API_KEY>",
+        "mnemonic": "<YOUR_UNIQUE_TWELVE_WORD_WALLET_SEED_PHRASE>"
+    }
+
+};
+```
+
+# Development Tasks
+## NPM Scripts
+### Build the contracts
+This creates a the build artifacts for deployment or testing
+
+```npm run build```
+
+### Test the contracts
+This builds the contracts and runs the unit tests.
+
+```npm run test```
+
 # Architecture
 ## Discussion
 Initial MVP allows an owner of one or more NFTs on a contract to send a set of them to one or more recipients.
