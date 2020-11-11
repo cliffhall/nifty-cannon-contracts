@@ -5,14 +5,26 @@ Make it rain NFTs!
 
 Send multiple [ERC-721](http://erc721.org/) tokens from the same contract to multiple Ethereum addresses. 
 
-Supports
+## Features
 * Airdrop mode 
-  - sender pays gas
+  - sender pays gas for transfers
   - tokens are transferred from sender wallet to recipient wallets
   
 * Will-call mode
-  - claimant pays gas when claiming token
-  
+  - sender sends same payload but it is stored rather than acted upon
+  - recipient can pickup will call NFTs any time
+  - recipient pays gas for transfers when picking up
+
+* Rampart
+  - anyone can register to opt out of receiving airdrops
+
+## Status
+Work in Progress
+* Initial Cannon functionality operational and unit tested
+* Rampart functionality not built or observed yet
+### Unit Test Output
+![Unit Test Output](images/Unit_Test_Output.png)
+
 # Architecture
 ## Discussion
 Initial MVP allows an owner of one or more NFTs on a contract to send a set of them to one or more recipients.
@@ -24,12 +36,12 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
 ### Terminology
 * Volley
   - A set of NFTs on a single contract destined for a single recipient
-  
-* Fusillade
-  - A set of Volleys
-  
-* Airdrop
+    
+* Airdrop Send
   - The immediate transfer of the NFTs in a Volley
+  
+* Will Call Send
+  - The deferred transfer of the NFTs in a Volley for a recipient to pickup later
   
 * Will Call Pickup
   - A recipient initiating a previously approved airdrop to their wallet
