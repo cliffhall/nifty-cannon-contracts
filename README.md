@@ -43,3 +43,7 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
 
 ### Volley Sequences - Will Call Pickup
 ![Volley Sequences - Will Call Pickup](images/Volley_Sequences-Will_Call_Pickup.png)
+
+# Attributions
+* Cannon icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+* Vintage Circus Cannon 3D model made by <a href="https://3docean.net/user/fainods">FainoDS</a> licensed from  <a href="https://3docean.net/">3dOcean</a>
