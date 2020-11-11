@@ -6,9 +6,9 @@ describe("Cannon", function() {
 
     let Snifty, snifty;
     let Cannon, cannon;
-    let accounts, sender, recip1, recip2, recip3, recip4;
+    let accounts, sender, recip1, recip2, recip3, recip4, recip5;
     const tokenURIBase = "https://snifty.token/";
-    const totalNFTs = 12;
+    const totalNFTs = 20;
 
     before( async function () {
 
@@ -20,6 +20,7 @@ describe("Cannon", function() {
         recip2 = accounts[2].address;
         recip3 = accounts[3].address;
         recip4 = accounts[4].address;
+        recip5 = accounts[5].address;
 
         // Deploy the contracts
         Snifty = await ethers.getContractFactory("SampleNFT");
@@ -98,6 +99,31 @@ describe("Cannon", function() {
         for (let i=0; i<volley2.tokenIds.length; i++){
             expect(await snifty.ownerOf(volley2.tokenIds[i])).equal(recip3);
         }
+
+    });
+
+    it("Should allow anyone to check the count of will call volleys awaiting them", async function() {
+
+        // Construct the Volley
+        const volley = new Volley(
+            Mode.WILLCALL,
+            sender,
+            recip5,
+            snifty.address,
+            [12, 13, 14]
+        );
+
+        // Validate Volley
+        expect(volley.isValid()).is.true;
+
+        // When no volleys have been sent to the recipient, the count should be 0
+        expect(await cannon.connect(accounts[5]).myWillCallCount()).to.equal(0);
+
+        // Execute a will call send
+        await cannon.fireVolley(volley);
+
+        // Be sure there is one awaiting volley for recipient
+        expect(await cannon.connect(accounts[5]).myWillCallCount()).to.equal(1);
 
     });
 
@@ -182,6 +208,5 @@ describe("Cannon", function() {
         }
 
     });
-
 
 });
