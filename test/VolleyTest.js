@@ -19,7 +19,7 @@ describe("Volley", function() {
     it("Should allow creation of valid Volley instance", async function() {
 
         const volley = new Volley(
-            Mode.AirDrop,
+            Mode.AIRDROP,
             sender,
             recipient,
             contract,

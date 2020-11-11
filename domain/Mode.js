@@ -7,9 +7,9 @@
  */
 class Mode {}
 
-Mode.AirDrop = 0;
-Mode.WillCall = 1;
+Mode.AIRDROP = 0;
+Mode.WILLCALL = 1;
 
-Mode.Modes = [Mode.AirDrop, Mode.WillCall];
+Mode.Modes = [Mode.AIRDROP, Mode.WILLCALL];
 
 module.exports = Mode;

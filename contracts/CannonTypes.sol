@@ -12,8 +12,8 @@ contract CannonTypes {
      * @notice Mode of operation
      */
     enum Mode {
-        AirDrop,
-        WillCall
+        AIRDROP,
+        WILLCALL
     }
 
     /**
