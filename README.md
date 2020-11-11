@@ -50,6 +50,7 @@ module.exports = {
 
     "rinkeby": {
         "forkNode": "https://eth-rinkeby.alchemyapi.io/v2/<YOUR_ALCHEMY_API_KEY>",
+        "forkBlock": 7507432,
         "txNode": "https://rinkeby.infura.io/v3/<YOUR_INFURA_API_KEY>",
         "mnemonic": "<YOUR_UNIQUE_TWELVE_WORD_WALLET_SEED_PHRASE>"
     }
