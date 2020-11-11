@@ -40,7 +40,7 @@ describe("SampleNFT", function() {
     });
 
 
-    it("Should allow owner to remove transfer approval to an operator", async function() {
+    it("Should allow owner to remove transfer approval from an operator", async function() {
 
         // Set approval for operator to manage sender's NFTs
         await snifty.setApprovalForAll(operator, false);
