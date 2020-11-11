@@ -35,8 +35,11 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
   - A recipient initiating a previously approved airdrop to their wallet
 
 ## Diagrams
-### ERC721 Volley Sequences
-![ERC721 Volley Sequences](images/ERC721_Volley_Sequences.png)
+### Volley Sequences - Air Drop Send
+![Volley Sequences - Air Drop Send](images/Volley_Sequences-Air_Drop_Send.png)
 
-### ERC721 Will Call Pickup Sequences
-![ERC721 Will Call Pickup Sequences](images/ERC721_WillCall_Sequences.png)
+### Volley Sequences - Will Call Send
+![Volley Sequences - Will Call Send](images/Volley_Sequences-Will_Call_Send.png)
+
+### Volley Sequences - Will Call Pickup
+![Volley Sequences - Will Call Pickup](images/Volley_Sequences-Will_Call_Pickup.png)

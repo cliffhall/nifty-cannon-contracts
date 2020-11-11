@@ -15,6 +15,7 @@ contract Cannon is CannonState {
     function fireVolley(Volley memory volley) internal returns (bool success) {
 
         // Get props
+        Mode mode = volley.mode;
         address sender = volley.sender;
         address recipient = volley.recipient;
         IERC721 tokenContract = IERC721(volley.tokenContract);
@@ -27,7 +28,7 @@ contract Cannon is CannonState {
             uint256 nft = volley.tokenIds[index];
 
             // Handle the volley as Airdrop or WillCall
-            if (volley.mode == Mode.AirDrop) {
+            if (mode == Mode.AirDrop) {
 
                 // Sender pays gas to transfer token directly to recipient wallet
                 tokenContract.safeTransferFrom(sender, recipient, nft);
@@ -41,6 +42,7 @@ contract Cannon is CannonState {
                 willCallVolleys[recipient].push(volley);
 
             }
+
         }
 
         return true;
@@ -50,17 +52,17 @@ contract Cannon is CannonState {
         require(fireVolley(volley), "Volley failed");
     }
 
-    function fireToMany(Volley[] memory fusillade) external {
-        for (uint256 index = 0; index < fusillade.length; index++) {
-            Volley memory volley = fusillade[index];
+    function fireToMany(Volley[] memory volleys) external {
+        for (uint256 index = 0; index < volleys.length; index++) {
+            Volley memory volley = volleys[index];
             require(fireVolley(volley), "Volley failed");
         }
     }
 
-    function acceptVolley(uint256 index) external {
+    function receiveVolley(uint256 index) external {
         uint256 length = willCallVolleys[msg.sender].length;
         require(length > 0, "Caller has no volleys to accept.");
-        require(index < length);
+        require(index < length, "Volley index out of bounds.");
         Volley memory volley = willCallVolleys[msg.sender][index];
         if (length != index + 1) {
             willCallVolleys[msg.sender][index] = willCallVolleys[msg.sender][--length];
@@ -69,11 +71,20 @@ contract Cannon is CannonState {
         require(fireVolley(volley), "Volley failed");
     }
 
-    function acceptAllVolleys() external {
+    function receiveAllVolleys() external {
         uint256 length = willCallVolleys[msg.sender].length;
         require(length > 0, "Caller has no volleys to accept.");
+        uint256 index = 0;
+        Volley memory volley;
         do {
-            this.acceptVolley(0);
+            //this.receiveVolley(0);
+            volley = willCallVolleys[msg.sender][index];
+            if (length != index + 1) {
+                willCallVolleys[msg.sender][index] = willCallVolleys[msg.sender][--length];
+            }
+            willCallVolleys[msg.sender].pop();
+            require(fireVolley(volley), "Volley failed");
+            length = willCallVolleys[msg.sender].length;
         } while (willCallVolleys[msg.sender].length > 0);
     }
 
