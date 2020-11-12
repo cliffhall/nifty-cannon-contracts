@@ -11,8 +11,8 @@ Send multiple [ERC-721](http://erc721.org/) tokens from the same contract to mul
   - tokens are transferred from sender wallet to recipient wallets
   
 * Will-call mode
-  - sender sends same payload but it is stored rather than acted upon
-  - recipient can pickup will call NFTs any time
+  - sender fires same payload as airdrop, but it is stored rather than acted upon
+  - recipient can pickup will-call NFTs any time
   - recipient pays gas for transfers when picking up
 
 * Rampart
@@ -85,21 +85,21 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
 * Airdrop Send
   - The immediate transfer of the NFTs in a Volley
   
-* Will Call Send
+* Will-call Send
   - The deferred transfer of the NFTs in a Volley for a recipient to pickup later
   
-* Will Call Pickup
+* Will-call Pickup
   - A recipient initiating a previously approved airdrop to their wallet
 
 ## Diagrams
 ### Volley Sequences - Air Drop Send
 ![Volley Sequences - Air Drop Send](images/Volley_Sequences-Air_Drop_Send.png)
 
-### Volley Sequences - Will Call Send
-![Volley Sequences - Will Call Send](images/Volley_Sequences-Will_Call_Send.png)
+### Volley Sequences - Will-call Send
+![Volley Sequences - Will-call Send](images/Volley_Sequences-Will_Call_Send.png)
 
-### Volley Sequences - Will Call Pickup
-![Volley Sequences - Will Call Pickup](images/Volley_Sequences-Will_Call_Pickup.png)
+### Volley Sequences - Will-call Pickup
+![Volley Sequences - Will-call Pickup](images/Volley_Sequences-Will_Call_Pickup.png)
 
 # Attributions
 * Cannon icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

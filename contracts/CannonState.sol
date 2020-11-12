@@ -12,7 +12,7 @@ import "./CannonBase.sol";
 contract CannonState is CannonBase, CannonTypes {
 
     /**
-     * @notice Will Call Volleys for a given recipient
+     * @notice Will-call Volleys for a given recipient
      */
     mapping(address => Volley[]) public willCallVolleys;
 

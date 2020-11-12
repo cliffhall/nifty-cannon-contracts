@@ -9,18 +9,34 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
  * @title Nifty Cannon
  * @author Cliff Hall
  * @notice Allows direct or deferred transfer of NFTs from one sender to one or more recipients.
- * TODO: disallow volleys targeting addresses behind Rampart
+ * TODO: disallow volleys targeting of addresses behind Rampart
  */
 contract Cannon is CannonState {
 
+    /**
+     * @notice Event emitted upon successful storage of a will-call volley.
+     * @param sender the sender of the volley
+     * @param recipient the recipient of the volley
+     * @param tokenContract the token contract that minted the NFTs
+     * @param tokenIds the ids of NFTs that were transferred
+     */
+    event VolleyStored(address indexed sender, address indexed recipient, address indexed tokenContract, uint256[] tokenIds);
 
+    /**
+     * @notice Event emitted upon successful transfer of a volley, via airdrop or pickup of a will-call.
+     * @param sender the sender of the volley
+     * @param recipient the recipient of the volley
+     * @param tokenContract the token contract that minted the NFTs
+     * @param tokenIds the ids of NFTs that were transferred
+     */
+    event VolleyTransferred(address indexed sender, address indexed recipient, address indexed tokenContract, uint256[] tokenIds);
 
     /**
      * @notice Process a Volley
      * This is the Cannon's central transfer mechanism.
-     * It has two operating modes: Airdrop and Will Call.
+     * It has two operating modes: Airdrop and Will-call.
      * In Airdrop mode, all of the NFTs in the Volley will be transferred to the recipient, sender paying gas.
-     * In Will Call mode, the volley will be stored, to be later executed by the recipient, who pays the gas.
+     * In Will-call mode, the volley will be stored, to be later executed by the recipient, who pays the gas.
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      * @param volley a valid Volley struct
      */
@@ -41,21 +57,27 @@ contract Cannon is CannonState {
             // Iterate over the NFTs to be transferred
             for (uint256 index = 0; index < volley.tokenIds.length; index++) {
 
+                // Get the current token id
+                uint256 nft = volley.tokenIds[index];
 
-                    // Get the current token id
-                    uint256 nft = volley.tokenIds[index];
-
-                    // Sender pays gas to transfer token directly to recipient wallet
-                    tokenContract.safeTransferFrom(sender, recipient, nft);
-
-            }
-
-            } else {
-
-                // Store the volley for the recipient to pickup later
-                willCallVolleys[recipient].push(volley);
+                // Sender pays gas to transfer token directly to recipient wallet
+                tokenContract.safeTransferFrom(sender, recipient, nft);
 
             }
+
+            // Emit VolleyTransferred event
+            emit VolleyTransferred(sender, recipient, volley.tokenContract, volley.tokenIds);
+
+
+        } else {
+
+            // Store the volley for the recipient to pickup later
+            willCallVolleys[recipient].push(volley);
+
+            // Emit VolleyTransferred event
+            emit VolleyStored(sender, recipient, volley.tokenContract, volley.tokenIds);
+
+        }
 
         return true;
     }
@@ -64,7 +86,7 @@ contract Cannon is CannonState {
      * @notice Pick up a Volley
      * There must be one or more Volleys awaiting the recipient
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
-     * @param index the index of the volley in the recipient's list of will call volleys
+     * @param index the index of the volley in the recipient's list of will-call volleys
      */
     function pickupVolley(uint256 index) internal returns (bool success) {
 
@@ -114,7 +136,7 @@ contract Cannon is CannonState {
      * @notice Receive a specific Volley awaiting the caller
      * There must be one or more Volleys awaiting the recipient
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
-     * @param index the index of the volley in the recipient's list of will call volleys
+     * @param index the index of the volley in the recipient's list of will-call volleys
      */
     function receiveVolley(uint256 index) external {
 
@@ -136,7 +158,7 @@ contract Cannon is CannonState {
     }
 
     /**
-     * @notice Check for Will Call Volleys
+     * @notice Check for Will-call Volleys
      * @return count the number of volleys awaiting the caller
      */
     function myWillCallCount() public view returns (uint256 count) {
