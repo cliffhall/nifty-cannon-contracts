@@ -14,10 +14,9 @@ contract SampleNFT is ERC721, CannonBase {
 
     string public constant TOKEN_NAME = "SampleNFT";
     string public constant TOKEN_SYMBOL = "SNIFTY";
-
-
+    
     /**
-     * Mint an NFT
+     * Mint a Sample NFT
      * @param _owner the address that will own the token
      * @param _tokenURIBase the base url to which tokenId will be added.
      */

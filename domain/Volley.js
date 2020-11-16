@@ -139,7 +139,6 @@ class Volley {
             this.recipientIsValid() &&
             this.tokenContractIsValid() &&
             this.tokenIdsIsValid()
-
         );
     };
 
