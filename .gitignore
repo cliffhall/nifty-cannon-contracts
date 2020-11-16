@@ -21,8 +21,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Webstorm
-/.idea/
-/.idea/*
+.idea/
+.idea/*
 
 #Hardhat files
 cache
