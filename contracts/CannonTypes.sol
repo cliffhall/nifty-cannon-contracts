@@ -13,7 +13,8 @@ contract CannonTypes {
      */
     enum Mode {
         AIRDROP,
-        WILLCALL
+        WILLCALL,
+        TICKET
     }
 
     /**
@@ -24,6 +25,16 @@ contract CannonTypes {
         address sender;
         address recipient;
         address tokenContract;
+        uint256[] tokenIds;
+    }
+
+    /**
+     * @notice Transferable will-call ticket
+     */
+    struct Ticket {
+        address sender;
+        address tokenContract;
+        uint256 ticketId;
         uint256[] tokenIds;
     }
 }

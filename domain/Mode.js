@@ -9,7 +9,8 @@ class Mode {}
 
 Mode.AIRDROP = 0;
 Mode.WILLCALL = 1;
+Mode.TICKET = 2;
 
-Mode.Modes = [Mode.AIRDROP, Mode.WILLCALL];
+Mode.Modes = [Mode.AIRDROP, Mode.WILLCALL, Mode.TICKET];
 
 module.exports = Mode;

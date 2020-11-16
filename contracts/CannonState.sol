@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 pragma solidity 0.7.4;
+pragma experimental ABIEncoderV2;
 
 import "./CannonTypes.sol";
 import "./CannonBase.sol";
@@ -12,8 +13,18 @@ import "./CannonBase.sol";
 contract CannonState is CannonBase, CannonTypes {
 
     /**
-     * @notice Will-call Volleys for a given recipient
+     * @notice Non-transferable will-call volleys that can only be picked up by a specific recipient
      */
     mapping(address => Volley[]) public willCallVolleys;
+
+    /**
+     * @notice Transferable will-call tickets
+     */
+    mapping(uint256 => Ticket) public willCallTickets;
+
+    /**
+     * @dev Since tickets are burned once used, totalSupply cannot be used for new ticket numbers
+     */
+    uint256 internal nextTicketNumber = 0;
 
 }
