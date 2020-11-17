@@ -31,9 +31,11 @@ Work in Progress
 * Transferable will-call tickets working and unit tested
 * Rampart functionality not MVP
 
-
 ### Unit Test Output
 ![Unit Test Output](images/Unit_Test_Output.png)
+
+### Unit Test Gas Report
+![Unit Test Gas](images/Unit_Test_Gas.png)
 
 # Developer Setup
 ## Prerequisites

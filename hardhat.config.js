@@ -1,5 +1,6 @@
 const environments = require('./environments');
 require("@nomiclabs/hardhat-waffle");
+require("hardhat-gas-reporter");
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
