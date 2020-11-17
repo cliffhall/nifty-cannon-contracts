@@ -100,6 +100,9 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
 * Will-call Send
   - The deferred transfer of the NFTs in a Volley for a recipient to pickup later
   
+* Will-call Ticket
+  - A transferable version of Will-call Send where an NFT is issued. Current owner can pickup
+  
 * Will-call Pickup
   - A recipient initiating a previously approved airdrop to their wallet
 

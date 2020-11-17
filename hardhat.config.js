@@ -3,6 +3,10 @@ require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
 module.exports = {
   defaultNetwork: "hardhat",
+  gasReporter: {
+    currency: 'USD',
+    gasPrice: 21
+  },
   networks: {
     hardhat: {
       /*
