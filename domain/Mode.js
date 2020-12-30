@@ -1,10 +1,8 @@
 /**
- * Schema Enum: Mode
- *
- * NOTE: This is the CommonJS version specifically for use with Node.
- *
+ * Domain Enum: Mode
  * @author Cliff Hall <cliff@futurescale.com>
  */
+const NODE = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 class Mode {}
 
 Mode.AIRDROP = 0;
@@ -13,4 +11,9 @@ Mode.TICKET = 2;
 
 Mode.Modes = [Mode.AIRDROP, Mode.WILLCALL, Mode.TICKET];
 
-module.exports = Mode;
+// Export
+if (NODE) {
+    module.exports = Mode;
+} else {
+    window.Mode = Mode;
+}

@@ -1,11 +1,9 @@
 /**
- * Schema Entity: Volley
- *
- * NOTE: This is the CommonJS version specifically for use with Node.
- *
+ * Domain Entity: Volley
  * @author Cliff Hall <cliff@futurescale.com>
  */
-const Mode = require( "./Mode");
+const NODE = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
+const Mode = require("./Mode");
 const eip55 = require("eip55");
 
 class Volley {
@@ -152,4 +150,9 @@ class Volley {
 
 }
 
-module.exports = Volley;
+// Export
+if (NODE) {
+    module.exports = Volley;
+} else {
+    window.Volley = Volley;
+}
