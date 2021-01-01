@@ -6,6 +6,9 @@ async function main() {
     // Compile everything (in case run by node)
     await hre.run('compile');
 
+    const accounts = await hre.ethers.provider.listAccounts();
+    console.log("Deployer account: ", accounts ? accounts[0] : "not found");
+
     // We get the contracts to deploy
     const Cannon = await hre.ethers.getContractFactory("Cannon");
     const cannon = await Cannon.deploy();
@@ -17,7 +20,6 @@ async function main() {
 
     console.log("Nifty Cannon deployed to:", cannon.address);
     console.log("Sample NFT deployed to:", snifty.address);
-
 }
 
 main()

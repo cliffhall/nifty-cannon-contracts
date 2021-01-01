@@ -51,14 +51,21 @@ npm install
 ```
 
 ### Configure Environment
-Create a file called `environments.js` with the following content for each network environment.
-* `forkNode`: the url endpoint for forking the ethereum network
-* `forkBlock`: the block to fork the network ethereum from
-* `txNode`: the endpoint for sending ethereum transactions
-* `mnemonic`: a valid ethereum HD wallet seed phrase
+Create a file called `environments.js` with 
+- The following info for each Ethereum network environment.
+  * `forkNode`: the url endpoint for forking the ethereum network
+  * `forkBlock`: the block to fork the network ethereum from
+  * `txNode`: the endpoint for sending ethereum transactions
+  * `mnemonic`: a valid ethereum HD wallet seed phrase
+
+- The following info for interacting with Etherscan:
+  * `apiKey`: your etherscan API key
 
 ```javascript
 module.exports = {
+    "etherscan": {
+        "apiKey": "<YOUR_ETHERSCAN_API_KEY>"
+    },
 
     "rinkeby": {
         "forkNode": "https://eth-rinkeby.alchemyapi.io/v2/<YOUR_ALCHEMY_API_KEY>",

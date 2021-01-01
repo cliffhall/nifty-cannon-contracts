@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+// SPDX-License-Identifier: MIT
 pragma solidity 0.7.4;
 
 import "./CannonBase.sol";

@@ -1,6 +1,8 @@
 const environments = require('./environments');
+require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
+
 module.exports = {
   defaultNetwork: "hardhat",
   gasReporter: {
@@ -21,6 +23,9 @@ module.exports = {
       accounts: {mnemonic: environments.rinkeby.mnemonic},
       gas: "auto"
     }
+  },
+  etherscan: {
+    apiKey: environments.etherscan.apiKey
   },
   solidity: {
     version: "0.7.4",
