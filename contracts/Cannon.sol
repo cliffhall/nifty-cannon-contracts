@@ -4,6 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "./CannonState.sol";
 import "./TicketFactory.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 /**
  * @title Nifty Cannon
@@ -12,6 +13,8 @@ import "./TicketFactory.sol";
  * TODO: disallow volleys targeting of addresses behind Rampart
  */
 contract Cannon is TicketFactory {
+
+    using SafeMath for uint256;
 
     /**
      * @notice Event emitted upon successful storage of a will-call volley.
@@ -241,11 +244,46 @@ contract Cannon is TicketFactory {
     }
 
     /**
-     * @notice Check for Will-call Volleys
-     * @return count the number of volleys awaiting the caller
+     * @notice Check combined count of Will-call Volleys and Tickets
+     * @return count the total number of volleys and tickets awaiting the caller
      */
     function myWillCallCount() public view returns (uint256 count) {
-        count = willCallVolleys[msg.sender].length;
+        uint256 volleyCount = willCallVolleys[msg.sender].length;
+        uint256 ticketCount = balanceOf(msg.sender);
+        count = volleyCount.add(ticketCount);
+    }
+
+    /**
+     * @notice Get the caller's will-call volleys
+     * @return tickets the volleys awaiting the caller
+     */
+    function myVolleys() public view returns (Volley[] memory) {
+        uint256 volleyCount = willCallVolleys[msg.sender].length;
+        Volley[] memory volleys = new Volley[](volleyCount);
+        if (volleyCount > 0) {
+            for (uint256 i = 0; i < volleyCount; i++) {
+                Volley memory volley = willCallVolleys[msg.sender][i];
+                volleys[i] = volley;
+            }
+        }
+        return volleys;
+    }
+
+    /**
+     * @notice Get the caller's transferable will-call tickets
+     * @return tickets the tickets awaiting the caller
+     */
+    function myTickets() public view returns (Ticket[] memory) {
+        uint256 ticketCount = balanceOf(msg.sender);
+        Ticket[] memory tickets = new Ticket[](ticketCount);
+        if (ticketCount > 0) {
+            for (uint256 i = 0; i < ticketCount; i++) {
+                uint256 ticketId = tokenOfOwnerByIndex(msg.sender, i);
+                Ticket memory ticket = willCallTickets[ticketId];
+                tickets[i] = ticket;
+            }
+        }
+        return tickets;
     }
 
 }

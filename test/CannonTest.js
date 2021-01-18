@@ -1,6 +1,7 @@
 const { expect } = require("chai");
 const Mode = require("../domain/Mode");
 const Volley = require("../domain/Volley");
+const Ticket = require("../domain/Ticket");
 
 describe("Cannon", function() {
 
@@ -226,6 +227,34 @@ describe("Cannon", function() {
 
     });
 
+    it("Should allow recipient to fetch a list of their waiting will-call volleys", async function() {
+
+        // Recipient
+        const account = accounts[5];
+        const recipient = account.address;
+
+        // Construct the Volley (sent in previous test but not picked up)
+        const volley = new Volley(
+            Mode.WILLCALL,
+            sender,
+            recipient,
+            snifty.address,
+            [12, 13, 14]
+        );
+
+        // Validate Volley
+        expect(volley.isValid()).is.true;
+
+        // Fetch the volleys
+        const result = await cannon.connect(recipient).myVolleys();
+        expect(result.length).to.equal(1);
+        expect(result[0].sender).to.equal(volley.sender);
+        expect(result[0].recipient).to.equal(volley.recipient);
+        expect(result[0].tokenContract).to.equal(volley.tokenContract);
+        expect(result[0].tokenIds.length).to.equal(volley.tokenIds.length);
+
+    });
+
     it("Should emit a VolleyTransferred event upon successful airdrop", async function() {
 
         // Recipient
@@ -308,7 +337,6 @@ describe("Cannon", function() {
             .emit(cannon, "VolleyTransferred")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
-
     });
 
     it("Should emit a VolleyTicketed event & recipient owns ticket upon issue of transferable will-call ticket", async function() {
@@ -366,6 +394,32 @@ describe("Cannon", function() {
             .to
             .emit(cannon,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
+
+    });
+
+    it("Should allow recipient to fetch a list of their waiting transferable will-call tickets", async function() {
+
+        // Recipient
+        const account = accounts[10];
+        const recipient = account.address;
+
+        // Construct the Ticket (created in previous test)
+        const ticket = new Ticket(
+            ticketId,
+            sender,
+            snifty.address,
+            [24, 25, 26]
+        );
+
+        // Validate Ticket
+        expect(ticket.isValid()).is.true;
+
+        // Fetch the tickets
+        const result = await cannon.connect(recipient).myTickets();
+        expect(result.length).to.equal(1);
+        expect(result[0].sender).to.equal(ticket.sender);
+        expect(result[0].tokenContract).to.equal(ticket.tokenContract);
+        expect(result[0].tokenIds.length).to.equal(ticket.tokenIds.length);
 
     });
 
