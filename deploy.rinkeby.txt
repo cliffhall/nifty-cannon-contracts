@@ -1,3 +1,7 @@
 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
 Nifty Cannon deployed to: 0xCA107491513B08959a1313B41cD9C71ae90f9Bb0
 Sample NFT deployed to: 0xa4E80b97b70402CF61F7c1eED559dA19cAD99C05
+Nothing to compile
+Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+Nifty Cannon deployed to: 0xdE8b64498299682c435FC9Fc588401EDC03CBFa9
+Sample NFT deployed to: 0x7e421d3376ab0d2D2Ba6b355702741bA680c56A5
