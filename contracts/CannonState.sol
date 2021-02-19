@@ -13,14 +13,14 @@ import "./CannonBase.sol";
 contract CannonState is CannonBase, CannonTypes {
 
     /**
-     * @notice Non-transferable will-call volleys that can only be picked up by a specific recipient
+     * @notice Non-transferable volleys by recipient address
      */
     mapping(address => Volley[]) public willCallVolleys;
 
     /**
-     * @notice Transferable will-call tickets
+     * @notice Transferable tickets by ticketId
      */
-    mapping(uint256 => Ticket) public willCallTickets;
+    mapping(uint256 => Ticket) public transferableTickets;
 
     /**
      * @dev Since tickets are burned once used, totalSupply cannot be used for new ticket numbers

@@ -12,24 +12,23 @@ Send multiple [ERC-721](http://erc721.org/) tokens from the same contract to mul
   
 * Will-call mode
   - sender fires same payload as airdrop, but it is stored rather than acted upon
-  - recipient can pickup will-call NFTs any time
-  - recipient pays gas for transfers when picking up
+  - recipient can claim will-call NFTs any time
+  - recipient pays gas for transfers when claiming
 
-* Transferable Will-call Ticket mode
-  - similar to will-call mode, except a will-call ticket is minted as an NFT, and transferred to the recipient
-  - the current owner of the will-call ticket may pay the gas to receive the volleyed NFTs
-  - if originally targeted recipient doesn't wish to pay gas to receive the NFTs, they can transfer or resell the ticket
+* Transferable Ticket mode
+  - similar to will-call mode, except a ticket is minted as an NFT, and transferred to the recipient
+  - the current owner of the ticket may pay the gas to receive the volleyed NFTs
+  - if originally targeted recipient doesn't wish to pay gas and receive the NFTs, they can transfer or resell the ticket
   - helps avoid unclaimed will-call volleys; more volleyed NFTs will are likely to end up in the secondary market
   
-* Rampart
-  - anyone can register to opt out of receiving airdrops (Not MV)
+* Rampart (Not in MVP)
+  - anyone can register to opt out of receiving airdrops
 
 ## Status
 Work in Progress
 * Airdrops working and unit tested
-* Non-transferable will-call working and unit tested
-* Transferable will-call tickets working and unit tested
-* Rampart functionality not MVP
+* Non-transferable will-call volleys working and unit tested
+* Transferable tickets working and unit tested
 
 ### Unit Test Output
 ![Unit Test Output](images/Unit_Test_Output.png)
@@ -89,6 +88,16 @@ This builds the contracts and runs the unit tests.
 
 ```npm run test```
 
+### Deploy to Rinkeby
+This deploys the built contracts to Rinkeby
+
+```npm run deploy:rinkeby```
+
+
+
+### Verify deployed contract with etherscan
+```npx hardhat verify --network [rinkeby|mainnet] DEPLOYED_CONTRACT_ADDRESS```
+
 # Architecture
 ## Discussion
 Initial MVP allows an owner of one or more NFTs on a contract to send a set of them to one or more recipients.
@@ -99,19 +108,19 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
 
 ### Terminology
 * Volley
-  - A set of NFTs on a single contract destined for a single recipient
+  - A set of NFTs on a single contract destined for a single claimer
     
-* Airdrop Send
-  - The immediate transfer of the NFTs in a Volley
+* Airdrop
+  - The immediate transfer of the NFTs in one or more Volleys to one or more recipients
   
-* Will-call Send
-  - The deferred transfer of the NFTs in a Volley for a recipient to pickup later
+* Will-call
+  - The a list of the NFTs in a Volley for a recipient to claim later
   
-* Will-call Ticket
-  - A transferable version of Will-call Send where an NFT is issued. Current owner can pickup
+* Ticket
+  - A transferable version of Will-call Volley where an NFT is issued. Current owner can claim
   
-* Will-call Pickup
-  - A recipient initiating a previously approved airdrop to their wallet
+* Claim
+  - A recipient receiving the previously approved NFTs to their wallet
 
 ## Diagrams
 ### Volley Sequences - Air Drop Send
@@ -123,11 +132,11 @@ Initial MVP allows an owner of one or more NFTs on a contract to send a set of t
 ### Volley Sequences - Will-call Pickup (non-transferable)
 ![Volley Sequences - Will-call Pickup](images/Volley_Sequences-Will_Call_Pickup.png)
 
-### Volley Sequences - Issuing Will-call Tickets (transferable)
-![Volley Sequences - Issue Will-call Tickets](images/Volley_Sequences-Issue_Will_Call_Tickets.png)
+### Volley Sequences - Issuing tickets (transferable)
+![Volley Sequences - Issue tickets](images/Volley_Sequences-Issue_Will_Call_Tickets.png)
 
-### Volley Sequences - Will-call Ticket Claim
-![Volley Sequences - Will-call Ticket Claim](images/Volley_Sequences-Will_Call_Ticket_Claim.png)
+### Volley Sequences - ticket Claim
+![Volley Sequences - ticket Claim](images/Volley_Sequences-Will_Call_Ticket_Claim.png)
 
 # Attributions
 * Cannon icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

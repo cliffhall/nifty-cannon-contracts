@@ -30,7 +30,7 @@ contract CannonTypes {
     }
 
     /**
-     * @notice Transferable will-call ticket
+     * @notice transferable ticket
      */
     struct Ticket {
         address sender;

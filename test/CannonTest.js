@@ -108,7 +108,7 @@ describe("Cannon", function() {
 
     });
 
-    it("Should allow recipient to pickup a single will-call volley with receiveVolley", async function() {
+    it("Should allow recipient to pickup a single will-call volley with claimVolley", async function() {
 
         // Recipient
         const account = accounts[3];
@@ -136,7 +136,7 @@ describe("Cannon", function() {
         expect(await cannon.connect(account).myWillCallCount()).to.equal(1);
 
         // Pickup recipient's volley on will-call
-        await cannon.connect(account).receiveVolley(0);
+        await cannon.connect(account).claimVolley(0);
 
         // Ensure recipient has all their tokens on will-call
         for (let i=0; i<volley.tokenIds.length; i++){
@@ -145,7 +145,7 @@ describe("Cannon", function() {
 
     });
 
-    it("Should allow recipient to pickup multiple will-call volleys with receiveAllVolleys", async function() {
+    it("Should allow recipient to pickup multiple will-call volleys with claimAllVolleys", async function() {
 
         // Recipient
         const account = accounts[4];
@@ -184,7 +184,7 @@ describe("Cannon", function() {
         expect(await cannon.connect(account).myWillCallCount()).to.equal(2);
 
         // Pickup Recipient's volley on will-call
-        await cannon.connect(account).receiveAllVolleys();
+        await cannon.connect(account).claimAllVolleys();
 
         // Ensure recipient received all their tokens from first volley
         for (let i=0; i<volley1.tokenIds.length; i++){
@@ -332,14 +332,14 @@ describe("Cannon", function() {
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
         // Pickup recipient's volley on will-call
-        await expect(cannon.connect(account).receiveVolley(0))
+        await expect(cannon.connect(account).claimVolley(0))
             .to
             .emit(cannon, "VolleyTransferred")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
     });
 
-    it("Should emit a VolleyTicketed event & recipient owns ticket upon issue of transferable will-call ticket", async function() {
+    it("Should emit a VolleyTicketed event & recipient owns ticket upon issue of transferable ticket", async function() {
 
         // Recipient
         const account = accounts[9];
@@ -363,12 +363,12 @@ describe("Cannon", function() {
             .emit(cannon,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
 
-        // Recipient should own the the NFT for the will-call ticket
+        // Recipient should own the the NFT for the ticket
         expect(await cannon.ownerOf(ticketId)).equal(recipient);
 
     });
 
-    it("Should increment ticketId upon successful issue of transferable will-call ticket", async function() {
+    it("Should increment ticketId upon successful issue of transferable ticket", async function() {
 
         // Recipient
         const account = accounts[10];
@@ -397,7 +397,7 @@ describe("Cannon", function() {
 
     });
 
-    it("Should allow recipient to fetch a list of their waiting transferable will-call tickets", async function() {
+    it("Should allow recipient to fetch a list of their waiting transferable tickets", async function() {
 
         // Recipient
         const account = accounts[10];
@@ -423,7 +423,7 @@ describe("Cannon", function() {
 
     });
 
-    it("Should allow recipient of will-call ticket to claim if they haven't transferred the ticket", async function() {
+    it("Should allow recipient of ticket to claim its nifties if they haven't transferred the ticket", async function() {
 
         // Recipient
         const account = accounts[11];
@@ -450,7 +450,7 @@ describe("Cannon", function() {
             .emit(cannon,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
 
-        // Claim recipient's will-call ticket
+        // Claim recipient's ticket
         await expect(cannon.connect(account).claimTicket(ticketId))
             .to
             .emit(cannon, "VolleyTransferred")
@@ -458,7 +458,7 @@ describe("Cannon", function() {
 
     });
 
-    it("Should not allow recipient of will-call ticket to claim if they've transferred the ticket", async function() {
+    it("Should not allow recipient of ticket to claim its nifties if they've transferred the ticket", async function() {
 
         // Recipient
         const account = accounts[12];
@@ -492,14 +492,14 @@ describe("Cannon", function() {
         // Transfer it
         await cannon.connect(account).transferFrom(recip1, recip2, ticketId);
 
-        // Attempt to claim will-call ticket as origial recipient
+        // Attempt to claim ticket as origial recipient
         await expect(cannon.connect(account).claimTicket(ticketId))
             .to
             .revertedWith("Caller is not the owner of the ticket.");
 
     });
 
-    it("Should allow current owner of a transferred will-call ticket to claim the ticket", async function() {
+    it("Should allow current owner of a transferred ticket to claim the ticket", async function() {
 
         // Recipient
         const account = accounts[13];
@@ -533,7 +533,7 @@ describe("Cannon", function() {
         // Transfer it
         await cannon.connect(account).transferFrom(recip1, recip2, ticketId);
 
-        // Claim will-call ticket as buyer and current owner
+        // Claim ticket as buyer and current owner
         await expect(cannon.connect(buyer).claimTicket(ticketId))
             .to
             .emit(cannon, "VolleyTransferred")
@@ -568,20 +568,20 @@ describe("Cannon", function() {
             .emit(cannon,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
 
-        // Claim recipient's will-call ticket
+        // Claim recipient's ticket
         await expect(cannon.connect(account).claimTicket(ticketId))
             .to
             .emit(cannon, "VolleyTransferred")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
-        // Attempt to will-call ticket again
+        // Attempt to ticket again
         await expect(cannon.connect(account).claimTicket(ticketId))
             .to
             .revertedWith("Ticket has already been claimed.");
 
     });
 
-    it("Should allow caller to pickup multiple will-call tickets with claimAllTickets", async function() {
+    it("Should allow caller to pickup multiple tickets with claimAllTickets", async function() {
 
         // Recipient
         const account = accounts[16];

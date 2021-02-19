@@ -6,21 +6,22 @@ import "./CannonState.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 /**
- * @title Nifty Cannon Will-call Ticket Factory
+ * @title Nifty Cannon Transferable Ticket Factory
  * @author Cliff Hall
- * @notice Manages the Cannon-native NFTs that represent will-call tickets.
- * The current holder of a will-call ticket can pick up a volley originally intended for another recipient.
+ * @notice Manages the Cannon-native NFTs that represent transferable tickets.
+ * Only the current holder of a ticket can pick up the associated nifties.
  */
 contract TicketFactory is CannonState, ERC721 {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 
-    string public constant TOKEN_NAME = "Nifty Cannon Will-call Ticket";
+    string public constant TOKEN_NAME = "Nifty Cannon Transferable Ticket";
     string public constant TOKEN_SYMBOL = "FODDER";
 
     /**
-     * Mint a will-call ticket
+     * Mint a ticket
      * @param _owner the address that will own the ticket
+     * @return ticketId the token id of the ticket
      */
     function mintTicket(address _owner)
     internal
@@ -32,7 +33,7 @@ contract TicketFactory is CannonState, ERC721 {
     }
 
     /**
-     * Burn a will-call ticket
+     * Burn a ticket
      * @param _ticketId the address that will own the ticket
      */
     function burnTicket(uint256 _ticketId)
@@ -40,5 +41,4 @@ contract TicketFactory is CannonState, ERC721 {
     {
         _burn(_ticketId);
     }
-
 }

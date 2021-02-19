@@ -38,7 +38,7 @@ contract Cannon is TicketFactory {
      * @notice Event emitted upon successful storage and ticketing of a volley,
      * @param sender the sender of the volley
      * @param recipient the recipient of the ticket
-     * @param ticketId the id of the transferable will-call ticket
+     * @param ticketId the id of the transferable ticket
      * @param tokenContract the token contract that minted the NFTs
      * @param tokenIds the ids of NFTs to be transferred
      */
@@ -92,10 +92,10 @@ contract Cannon is TicketFactory {
 
         } else if (mode == Mode.TICKET) {
 
-            // Mint a transferable will-call ticket
+            // Mint a transferable ticket
             uint256 ticketId = mintTicket(recipient);
             Ticket memory ticket = Ticket(_volley.sender, _volley.tokenContract, ticketId, _volley.tokenIds);
-            willCallTickets[ticketId] = ticket;
+            transferableTickets[ticketId] = ticket;
 
             // Emit VolleyTicketed event
             emit VolleyTicketed(sender, recipient, ticketId, _volley.tokenContract, _volley.tokenIds);
@@ -135,10 +135,10 @@ contract Cannon is TicketFactory {
     }
 
     /**
-     * @notice Pick up a transferable will-call volley
+     * @notice Pick up a transferable volley
      * The caller must own the given ticket (an NFT)
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
-     * @param _ticketId the id of the transferable will-call ticket
+     * @param _ticketId the id of the transferable ticket
      */
     function pickupTicket(uint256 _ticketId) internal returns (bool success) {
 
@@ -154,10 +154,10 @@ contract Cannon is TicketFactory {
         // 2. set recipient to caller
         Volley memory volley;
         volley.mode = Mode.AIRDROP;
-        volley.sender = willCallTickets[_ticketId].sender;
+        volley.sender = transferableTickets[_ticketId].sender;
         volley.recipient = msg.sender;
-        volley.tokenContract = willCallTickets[_ticketId].tokenContract;
-        volley.tokenIds = willCallTickets[_ticketId].tokenIds;
+        volley.tokenContract = transferableTickets[_ticketId].tokenContract;
+        volley.tokenIds = transferableTickets[_ticketId].tokenIds;
 
         // Burn the ticket
         burnTicket(_ticketId);
@@ -189,23 +189,23 @@ contract Cannon is TicketFactory {
     }
 
     /**
-     * @notice Receive a specific Volley awaiting the caller
+     * @notice Claim a specific Volley awaiting the caller
      * There must be one or more Volleys awaiting the recipient
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      * @param _index the index of the volley in the recipient's list of will-call volleys
      */
-    function receiveVolley(uint256 _index) external {
+    function claimVolley(uint256 _index) external {
 
         // Pick up the specified volley
         require(pickupVolley(_index), "Will call pickupVolley failed");
     }
 
     /**
-     * @notice Receive all Volleys awaiting the caller
+     * @notice Claim all Volleys awaiting the caller
      * There must be one or more Volleys awaiting the caller
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      */
-    function receiveAllVolleys() external {
+    function claimAllVolleys() external {
 
         // Get the first volley and process it, looping until all volleys are picked up
         while(willCallVolleys[msg.sender].length > 0) {
@@ -217,7 +217,7 @@ contract Cannon is TicketFactory {
      * @notice Receive a specific Volley awaiting the caller
      * There must be one or more Volleys awaiting the recipient
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
-     * @param _ticketId the id of the transferable will-call ticket
+     * @param _ticketId the id of the transferable ticket
      */
     function claimTicket(uint256 _ticketId) external {
 
@@ -270,7 +270,7 @@ contract Cannon is TicketFactory {
     }
 
     /**
-     * @notice Get the caller's transferable will-call tickets
+     * @notice Get the caller's transferable tickets
      * @return tickets the tickets awaiting the caller
      */
     function myTickets() public view returns (Ticket[] memory) {
@@ -279,7 +279,7 @@ contract Cannon is TicketFactory {
         if (ticketCount > 0) {
             for (uint256 i = 0; i < ticketCount; i++) {
                 uint256 ticketId = tokenOfOwnerByIndex(msg.sender, i);
-                Ticket memory ticket = willCallTickets[ticketId];
+                Ticket memory ticket = transferableTickets[ticketId];
                 tickets[i] = ticket;
             }
         }

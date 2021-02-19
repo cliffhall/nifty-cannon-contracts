@@ -20,6 +20,7 @@ async function main() {
 
     console.log("Nifty Cannon deployed to:", cannon.address);
     console.log("Sample NFT deployed to:", snifty.address);
+    console.log("\n");
 }
 
 main()
