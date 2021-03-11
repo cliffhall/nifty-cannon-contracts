@@ -1,0 +1,44 @@
+[
+  '0x01ffc9a7', '0x19e3b533',
+  '0x87952d22', '0x50eb3f43',
+  '0x81b5207d', '0x19c841ab',
+  '0x51b68a4d', '0x2cb83248',
+  '0x77e9d0d6', '0x4484b3b9',
+  '0x9abf97aa', '0x292c460d',
+  '0x0716c2ae', '0xb0e8fcc7',
+  '0x11046047', '0xcf3bbe18',
+  '0x24c1d5a7', '0xcbb835f6',
+  '0x71a99d6f', '0xdb32da15'
+]
+[
+  [
+    '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+    [ '0x1f931c1c' ],
+    facetAddress: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+    functionSelectors: [ '0x1f931c1c' ]
+  ],
+  [
+    '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
+    [
+      '0xcdffacc6',
+      '0x52ef6b2c',
+      '0xadfca15e',
+      '0x7a0ed627',
+      '0x01ffc9a7'
+    ],
+    facetAddress: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
+    functionSelectors: [
+      '0xcdffacc6',
+      '0x52ef6b2c',
+      '0xadfca15e',
+      '0x7a0ed627',
+      '0x01ffc9a7'
+    ]
+  ],
+  [
+    '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
+    [ '0x8da5cb5b', '0xf2fde38b' ],
+    facetAddress: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
+    functionSelectors: [ '0x8da5cb5b', '0xf2fde38b' ]
+  ]
+]
