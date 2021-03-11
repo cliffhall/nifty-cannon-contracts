@@ -49,8 +49,7 @@ describe('DiamondTest', async () => {
   before(async () => {
 
     accounts = await ethers.getSigners();
-    deployer = accounts[0].address;
-    console.log("Deployer account: ", deployer ? deployer : "not found" && process.exit() );
+    deployer = accounts[0];
 
     // Deploy the Test, Cut, Loupe, Ownership, and Diamond facets
 
@@ -88,7 +87,7 @@ describe('DiamondTest', async () => {
         [osf.address, FacetCutAction.Add, getSelectors(osf)]
       ]
       const Diamond = await hre.ethers.getContractFactory("Diamond");
-      diamond = await Diamond.deploy(diamondCut, [deployer]);
+      diamond = await Diamond.deploy(diamondCut, [deployer.address]);
       await diamond.deployed();
       console.log("Diamond deployed to:", diamond.address);
     });
@@ -102,8 +101,6 @@ describe('DiamondTest', async () => {
 
     // Diamond as Ownership Facet
     ownershipFacet = await ethers.getContractAt('OwnershipFacet', diamond.address);
-
-    deployer = accounts[0];
   })
 
   it('should have three facets -- call to facetAddresses function', async () => {
