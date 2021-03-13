@@ -23,7 +23,7 @@ function getSelectors (contract) {
 // This bug manifests if you delete something from the final
 // selector slot array, so we'll fill up a new slot with
 // things, and have a fresh row to work with.
-describe('Cache bug test', async () => {
+describe('Diamond Cache Bug test', async () => {
 
   let test1Facet;
   let diamondCutFacet;
@@ -67,13 +67,13 @@ describe('Cache bug test', async () => {
     const DiamondCutFacet = await hre.ethers.getContractFactory("DiamondCutFacet");
     const dcf = await DiamondCutFacet.deploy();
     await dcf.deployed();
-    console.log("DiamondCutFacet deployed to:", dcf.address);
+    //console.log("DiamondCutFacet deployed to:", dcf.address);
 
     // Diamond Loupe Facet
     const DiamondLoupeFacet = await hre.ethers.getContractFactory("DiamondLoupeFacet");
     const dlf = await DiamondLoupeFacet.deploy();
     await dlf.deployed();
-    console.log("DiamondLoupeFacet deployed to:", dlf.address);
+    //console.log("DiamondLoupeFacet deployed to:", dlf.address);
 
     // Ownership Facet
     const OwnershipFacet = await hre.ethers.getContractFactory("OwnershipFacet");
@@ -87,9 +87,9 @@ describe('Cache bug test', async () => {
       const Diamond = await hre.ethers.getContractFactory("Diamond");
       diamond = await Diamond.deploy(diamondCut, [deployer.address]);
       await diamond.deployed();
-      console.log("Diamond deployed to:", diamond.address);
+     //console.log("Diamond deployed to:", diamond.address);
     });
-    console.log("OwnershipFacet deployed to:", osf.address);
+    //console.log("OwnershipFacet deployed to:", osf.address);
 
     const Test1Facet = await hre.ethers.getContractFactory("Test1Facet");
     test1Facet = await Test1Facet.deploy();

@@ -57,25 +57,25 @@ describe('DiamondTest', async () => {
     const Test1Facet = await hre.ethers.getContractFactory("Test1Facet");
     test1Facet = await Test1Facet.deploy();
     await test1Facet.deployed();
-    console.log("Test1Facet deployed to:", test1Facet.address);
+    //console.log("Test1Facet deployed to:", test1Facet.address);
 
     // Test 2
     const Test2Facet = await hre.ethers.getContractFactory("Test2Facet");
     test2Facet = await Test2Facet.deploy();
     await test2Facet.deployed();
-    console.log("Test2Facet deployed to:", test2Facet.address);
+    //console.log("Test2Facet deployed to:", test2Facet.address);
 
     // Diamond Cut Facet
     const DiamondCutFacet = await hre.ethers.getContractFactory("DiamondCutFacet");
     const dcf = await DiamondCutFacet.deploy();
     await dcf.deployed();
-    console.log("DiamondCutFacet deployed to:", dcf.address);
+    //console.log("DiamondCutFacet deployed to:", dcf.address);
 
     // Diamond Loupe Facet
     const DiamondLoupeFacet = await hre.ethers.getContractFactory("DiamondLoupeFacet");
     const dlf = await DiamondLoupeFacet.deploy();
     await dlf.deployed();
-    console.log("DiamondLoupeFacet deployed to:", dlf.address);
+    //console.log("DiamondLoupeFacet deployed to:", dlf.address);
 
     // Ownership Facet
     const OwnershipFacet = await hre.ethers.getContractFactory("OwnershipFacet");
@@ -89,9 +89,9 @@ describe('DiamondTest', async () => {
       const Diamond = await hre.ethers.getContractFactory("Diamond");
       diamond = await Diamond.deploy(diamondCut, [deployer.address]);
       await diamond.deployed();
-      console.log("Diamond deployed to:", diamond.address);
+      //console.log("Diamond deployed to:", diamond.address);
     });
-    console.log("OwnershipFacet deployed to:", osf.address);
+    //console.log("OwnershipFacet deployed to:", osf.address);
 
     // Diamond as Diamond Cut Facet
     diamondCutFacet = await ethers.getContractAt('DiamondCutFacet', diamond.address);
