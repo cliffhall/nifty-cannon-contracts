@@ -8,30 +8,6 @@ const FacetCutAction = {
   Remove: 2
 }
 
-function getSelectors (contract) {
-  const signatures = Object.keys(contract.interface.functions);
-  const selectors = signatures.reduce((acc, val) => {
-    if (val !== 'init(bytes)') {
-      acc.push(contract.interface.getSighash(val))
-    }
-    return acc
-  }, []);
-  return selectors.reverse();
-}
-
-function removeItem (array, item) {
-  array.splice(array.indexOf(item), 1)
-  return array
-}
-
-function findPositionInFacets (facetAddress, facets) {
-  for (let i = 0; i < facets.length; i++) {
-    if (facets[i].facetAddress === facetAddress) {
-      return i
-    }
-  }
-}
-
 describe('DiamondTest', async () => {
   let diamondCutFacet;
   let diamondLoupeFacet;
@@ -81,6 +57,8 @@ describe('DiamondTest', async () => {
     const OwnershipFacet = await hre.ethers.getContractFactory("OwnershipFacet");
     const osf = await OwnershipFacet.deploy();
     await osf.deployed().then(async () => {
+
+      // Deploy Diamond with Cut, Loupe, and Ownership facets pre-cut
       const diamondCut = [
         [dcf.address, FacetCutAction.Add, getSelectors(dcf)],
         [dlf.address, FacetCutAction.Add, getSelectors(dlf)],
@@ -89,6 +67,7 @@ describe('DiamondTest', async () => {
       const Diamond = await hre.ethers.getContractFactory("Diamond");
       diamond = await Diamond.deploy(diamondCut, [deployer.address]);
       await diamond.deployed();
+
       //console.log("Diamond deployed to:", diamond.address);
     });
     //console.log("OwnershipFacet deployed to:", osf.address);
@@ -294,3 +273,27 @@ describe('DiamondTest', async () => {
     assert.sameMembers(facets[findPositionInFacets(addresses[4], facets)][1], getSelectors(test2Facet))
   })
 })
+
+function getSelectors (contract) {
+  const signatures = Object.keys(contract.interface.functions);
+  const selectors = signatures.reduce((acc, val) => {
+    if (val !== 'init(bytes)') {
+      acc.push(contract.interface.getSighash(val))
+    }
+    return acc
+  }, []);
+  return selectors.reverse();
+}
+
+function removeItem (array, item) {
+  array.splice(array.indexOf(item), 1)
+  return array
+}
+
+function findPositionInFacets (facetAddress, facets) {
+  for (let i = 0; i < facets.length; i++) {
+    if (facets[i].facetAddress === facetAddress) {
+      return i
+    }
+  }
+}
