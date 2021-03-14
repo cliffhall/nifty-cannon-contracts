@@ -107,8 +107,8 @@ describe("CannonFacet", function() {
         }
 
         // Set approval for Cannon to manage sender's NFTs
-        console.log('cannonFacet address',cannonFacet.address);
-        await snifty.setApprovalForAll(cannonFacet.address, true);
+        console.log('cannonFacet address', cannonFacet.address);
+        await snifty.connect(accounts[1]).setApprovalForAll(cannonFacet.address, true);
 
     });
 
