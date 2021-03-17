@@ -1,6 +1,6 @@
 const hre = require("hardhat");
 const ethers = hre.ethers;
-const { assert, expect } = require("chai");
+const { expect } = require("chai");
 
 const FacetCutAction = {
     Add: 0,
@@ -38,7 +38,7 @@ describe("CannonFacet", function() {
         // Deploy the Test, Cut, Loupe, Ownership, and Diamond facets
 
         // Cannon Facet
-        const CannonFacet = await hre.ethers.getContractFactory("CannonFacet");
+        const CannonFacet = await ethers.getContractFactory("CannonFacet");
         const ncf = await CannonFacet.deploy();
         await ncf.deployed();
         const cannonSelectors = getSelectors(ncf);
@@ -47,7 +47,7 @@ describe("CannonFacet", function() {
         //console.log("CannonFacet deployed to:", ncf.address);
 
         // Diamond Cut Facet
-        const DiamondCutFacet = await hre.ethers.getContractFactory("DiamondCutFacet");
+        const DiamondCutFacet = await ethers.getContractFactory("DiamondCutFacet");
         const dcf = await DiamondCutFacet.deploy();
         await dcf.deployed();
         const diamondCutSelectors = getSelectors(dcf);
@@ -55,7 +55,7 @@ describe("CannonFacet", function() {
         //console.log("DiamondCutFacet deployed to:", dcf.address);
 
         // Diamond Loupe Facet
-        const DiamondLoupeFacet = await hre.ethers.getContractFactory("DiamondLoupeFacet");
+        const DiamondLoupeFacet = await ethers.getContractFactory("DiamondLoupeFacet");
         const dlf = await DiamondLoupeFacet.deploy();
         await dlf.deployed();
         const diamondLoupeSelectors = getSelectors(dlf);
@@ -63,7 +63,7 @@ describe("CannonFacet", function() {
         //console.log("DiamondLoupeFacet deployed to:", dlf.address);
 
         // Ownership Facet
-        const OwnershipFacet = await hre.ethers.getContractFactory("OwnershipFacet");
+        const OwnershipFacet = await ethers.getContractFactory("OwnershipFacet");
         const osf = await OwnershipFacet.deploy();
         const ownershipSelectors = getSelectors(osf);
         const ownershipCut = [osf.address, FacetCutAction.Add, ownershipSelectors];
@@ -78,7 +78,7 @@ describe("CannonFacet", function() {
                 ownershipCut,
                 cannonCut,
             ]
-            const Cannon = await hre.ethers.getContractFactory("Diamond");
+            const Cannon = await ethers.getContractFactory("Diamond");
             cannon = await Cannon.deploy(diamondCut, [deployer.address]);
             await cannon.deployed();
 
