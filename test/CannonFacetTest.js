@@ -44,7 +44,7 @@ describe("CannonFacet", function() {
         const cannonSelectors = getSelectors(ncf);
         removeItem(cannonSelectors, '0x01ffc9a7'); // EIP-165 supportsInterface() exists in
         const cannonCut = [ncf.address, FacetCutAction.Add, cannonSelectors];
-        console.log("CannonFacet deployed to:", ncf.address);
+        //console.log("CannonFacet deployed to:", ncf.address);
 
         // Diamond Cut Facet
         const DiamondCutFacet = await hre.ethers.getContractFactory("DiamondCutFacet");
@@ -52,7 +52,7 @@ describe("CannonFacet", function() {
         await dcf.deployed();
         const diamondCutSelectors = getSelectors(dcf);
         const diamondCutCut = [dcf.address, FacetCutAction.Add, diamondCutSelectors];
-        console.log("DiamondCutFacet deployed to:", dcf.address);
+        //console.log("DiamondCutFacet deployed to:", dcf.address);
 
         // Diamond Loupe Facet
         const DiamondLoupeFacet = await hre.ethers.getContractFactory("DiamondLoupeFacet");
@@ -60,7 +60,7 @@ describe("CannonFacet", function() {
         await dlf.deployed();
         const diamondLoupeSelectors = getSelectors(dlf);
         const diamondLoupeCut = [dlf.address, FacetCutAction.Add, diamondLoupeSelectors];
-        console.log("DiamondLoupeFacet deployed to:", dlf.address);
+        //console.log("DiamondLoupeFacet deployed to:", dlf.address);
 
         // Ownership Facet
         const OwnershipFacet = await hre.ethers.getContractFactory("OwnershipFacet");
@@ -69,7 +69,7 @@ describe("CannonFacet", function() {
         const ownershipCut = [osf.address, FacetCutAction.Add, ownershipSelectors];
         await osf.deployed().then(async () => {
 
-            console.log("OwnershipFacet deployed to:", osf.address);
+            //console.log("OwnershipFacet deployed to:", osf.address);
 
             // Deploy Diamond with Cut, Loupe, and Ownership facets pre-cut
             const diamondCut = [
@@ -82,7 +82,7 @@ describe("CannonFacet", function() {
             cannon = await Cannon.deploy(diamondCut, [deployer.address]);
             await cannon.deployed();
 
-            console.log("Diamond deployed to:", cannon.address);
+            //console.log("Diamond deployed to:", cannon.address);
         });
 
         // Diamond Cut Facet
@@ -107,7 +107,7 @@ describe("CannonFacet", function() {
         }
 
         // Set approval for Cannon to manage sender's NFTs
-        console.log('cannonFacet address', cannonFacet.address);
+        //console.log('cannonFacet address', cannonFacet.address);
         await snifty.connect(accounts[1]).setApprovalForAll(cannonFacet.address, true);
 
     });
@@ -351,7 +351,7 @@ describe("CannonFacet", function() {
         // Execute a will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyTransferred")
+            .emit(cannonFacet,"VolleyTransferred")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
     });
@@ -377,7 +377,7 @@ describe("CannonFacet", function() {
         // Execute a will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyStored")
+            .emit(cannonFacet,"VolleyStored")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
     });
@@ -403,13 +403,13 @@ describe("CannonFacet", function() {
         // Execute a will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyStored")
+            .emit(cannonFacet,"VolleyStored")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
         // Pickup recipient's volley on will-call
         await expect(cannonFacet.connect(account).claimVolley(0))
             .to
-            .emit(cannon, "VolleyTransferred")
+            .emit(cannonFacet, "VolleyTransferred")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
     });
@@ -435,7 +435,7 @@ describe("CannonFacet", function() {
         // Execute a will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyTicketed")
+            .emit(cannonFacet,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
 
         // Recipient should own the the NFT for the ticket
@@ -467,7 +467,7 @@ describe("CannonFacet", function() {
         // Execute a will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyTicketed")
+            .emit(cannonFacet,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
 
     });
@@ -522,13 +522,13 @@ describe("CannonFacet", function() {
         // Execute a ticketed will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyTicketed")
+            .emit(cannonFacet,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
 
         // Claim recipient's ticket
         await expect(cannonFacet.connect(account).claimTicket(ticketId))
             .to
-            .emit(cannon, "VolleyTransferred")
+            .emit(cannonFacet, "VolleyTransferred")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
     });
@@ -561,7 +561,7 @@ describe("CannonFacet", function() {
         // Execute a ticketed will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyTicketed")
+            .emit(cannonFacet,"VolleyTicketed")
             .withArgs(sender, recip1, ticketId, snifty.address, volley.tokenIds);
 
         // Transfer it
@@ -602,7 +602,7 @@ describe("CannonFacet", function() {
         // Execute a ticketed will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyTicketed")
+            .emit(cannonFacet,"VolleyTicketed")
             .withArgs(sender, recip1, ticketId, snifty.address, volley.tokenIds);
 
         // Transfer it
@@ -611,7 +611,7 @@ describe("CannonFacet", function() {
         // Claim ticket as buyer and current owner
         await expect(cannonFacet.connect(buyer).claimTicket(ticketId))
             .to
-            .emit(cannon, "VolleyTransferred")
+            .emit(cannonFacet, "VolleyTransferred")
             .withArgs(sender, recip2, snifty.address, volley.tokenIds);
 
     });
@@ -640,13 +640,13 @@ describe("CannonFacet", function() {
         // Execute a ticketed will-call send
         await expect(cannonFacet.fireVolley(volley))
             .to
-            .emit(cannon,"VolleyTicketed")
+            .emit(cannonFacet,"VolleyTicketed")
             .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
 
         // Claim recipient's ticket
         await expect(cannonFacet.connect(account).claimTicket(ticketId))
             .to
-            .emit(cannon, "VolleyTransferred")
+            .emit(cannonFacet, "VolleyTransferred")
             .withArgs(sender, recipient, snifty.address, volley.tokenIds);
 
         // Attempt to ticket again
