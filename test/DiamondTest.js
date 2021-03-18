@@ -30,31 +30,31 @@ describe('DiamondTest', async () => {
     // Deploy the Test, Cut, Loupe, Ownership, and Diamond facets
 
     // Test 1 Facet
-    const Test1Facet = await hre.ethers.getContractFactory("Test1Facet");
+    const Test1Facet = await ethers.getContractFactory("Test1Facet");
     test1Facet = await Test1Facet.deploy();
     await test1Facet.deployed();
     //console.log("Test1Facet deployed to:", test1Facet.address);
 
     // Test 2
-    const Test2Facet = await hre.ethers.getContractFactory("Test2Facet");
+    const Test2Facet = await ethers.getContractFactory("Test2Facet");
     test2Facet = await Test2Facet.deploy();
     await test2Facet.deployed();
     //console.log("Test2Facet deployed to:", test2Facet.address);
 
     // Diamond Cut Facet
-    const DiamondCutFacet = await hre.ethers.getContractFactory("DiamondCutFacet");
+    const DiamondCutFacet = await ethers.getContractFactory("DiamondCutFacet");
     const dcf = await DiamondCutFacet.deploy();
     await dcf.deployed();
     //console.log("DiamondCutFacet deployed to:", dcf.address);
 
     // Diamond Loupe Facet
-    const DiamondLoupeFacet = await hre.ethers.getContractFactory("DiamondLoupeFacet");
+    const DiamondLoupeFacet = await ethers.getContractFactory("DiamondLoupeFacet");
     const dlf = await DiamondLoupeFacet.deploy();
     await dlf.deployed();
     //console.log("DiamondLoupeFacet deployed to:", dlf.address);
 
     // Ownership Facet
-    const OwnershipFacet = await hre.ethers.getContractFactory("OwnershipFacet");
+    const OwnershipFacet = await ethers.getContractFactory("OwnershipFacet");
     const osf = await OwnershipFacet.deploy();
     await osf.deployed().then(async () => {
 
@@ -64,7 +64,7 @@ describe('DiamondTest', async () => {
         [dlf.address, FacetCutAction.Add, getSelectors(dlf)],
         [osf.address, FacetCutAction.Add, getSelectors(osf)]
       ]
-      const Diamond = await hre.ethers.getContractFactory("Diamond");
+      const Diamond = await ethers.getContractFactory("Diamond");
       diamond = await Diamond.deploy(diamondCut, [deployer.address]);
       await diamond.deployed();
 
