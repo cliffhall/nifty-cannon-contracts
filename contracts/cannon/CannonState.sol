@@ -3,14 +3,13 @@ pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "./CannonTypes.sol";
-import "./CannonBase.sol";
 
 /**
  * @title Nifty Cannon State
  * @author Cliff Hall
  * @notice Defines the state members maintained by the Cannon contract
  */
-contract CannonState is CannonBase, CannonTypes {
+contract CannonState is CannonTypes {
 
     /**
      * @notice Non-transferable volleys by recipient address

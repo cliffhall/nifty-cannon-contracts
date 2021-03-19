@@ -12,7 +12,7 @@ const Mode = require("../domain/Mode");
 const Volley = require("../domain/Volley");
 const Ticket = require("../domain/Ticket");
 
-describe("CannonFacet", function() {
+describe("CannonFacet as a diamond facet", function() {
 
     let diamondCutFacet;
     let diamondLoupeFacet;

@@ -3,7 +3,7 @@ const Mode = require("../domain/Mode");
 const Volley = require("../domain/Volley");
 const Ticket = require("../domain/Ticket");
 
-describe("Cannon", function() {
+describe("CannonFacet as a standalone contract", function() {
 
     let Snifty, snifty;
     let Cannon, cannon;
@@ -24,7 +24,7 @@ describe("Cannon", function() {
         Snifty = await ethers.getContractFactory("SampleNFT");
         snifty = await Snifty.deploy();
 
-        Cannon = await ethers.getContractFactory("Cannon");
+        Cannon = await ethers.getContractFactory("CannonFacet");
         cannon = await Cannon.deploy();
 
         // Pre-mint some NFTs to transfer
