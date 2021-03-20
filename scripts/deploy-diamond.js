@@ -6,6 +6,85 @@ const FacetCutAction = {
     Remove: 2
 }
 
+let contract, contracts = [];
+const divider = "-".repeat(80);
+
+async function main() {
+
+    console.log(`\n${divider}\nDeploying. ${new Date()}\n${divider}\n`);
+
+    const accounts = await ethers.provider.listAccounts();
+    const deployer = accounts[0];
+    console.log("🔱 Deployer account: ", deployer ? deployer : "not found" && process.exit() );
+
+    // Deploy the Cannnon, Cut, Loupe, Ownership, and Diamond facets
+
+    // Cannon Facet
+    const CannonFacet = await ethers.getContractFactory("CannonFacet");
+    const ncf = await CannonFacet.deploy();
+    await ncf.deployed();
+    const cannonSelectors = getSelectors(ncf);
+    removeItem(cannonSelectors, '0x01ffc9a7'); // EIP-165 supportsInterface() already exists
+    const cannonCut = [ncf.address, FacetCutAction.Add, cannonSelectors];
+    deploymentComplete('CannonFacet', ncf.address, [] );
+
+    // Diamond Cut Facet
+    const DiamondCutFacet = await ethers.getContractFactory("DiamondCutFacet");
+    const dcf = await DiamondCutFacet.deploy();
+    await dcf.deployed();
+    const diamondCutSelectors = getSelectors(dcf);
+    const diamondCutCut = [dcf.address, FacetCutAction.Add, diamondCutSelectors];
+    deploymentComplete('DiamondCutFacet', dcf.address, [] );
+
+    // Diamond Loupe Facet
+    const DiamondLoupeFacet = await ethers.getContractFactory("DiamondLoupeFacet");
+    const dlf = await DiamondLoupeFacet.deploy();
+    await dlf.deployed();
+    const diamondLoupeSelectors = getSelectors(dlf);
+    const diamondLoupeCut = [dlf.address, FacetCutAction.Add, diamondLoupeSelectors];
+    deploymentComplete('DiamondLoupeFacet', dlf.address, [] );
+
+    // Ownership Facet
+    const OwnershipFacet = await ethers.getContractFactory("OwnershipFacet");
+    const osf = await OwnershipFacet.deploy();
+    const ownershipSelectors = getSelectors(osf);
+    const ownershipCut = [osf.address, FacetCutAction.Add, ownershipSelectors];
+    await osf.deployed().then(async () => {
+
+        deploymentComplete('OwnershipFacet', osf.address, [] );
+
+        // Deploy Diamond with Cut, Loupe, Ownership, and Cannon facets pre-cut
+        const diamondCut = [
+            diamondCutCut,
+            diamondLoupeCut,
+            ownershipCut,
+            cannonCut,
+        ]
+        const Cannon = await ethers.getContractFactory("Diamond");
+        const cannon = await Cannon.deploy(diamondCut, [deployer]);
+        await cannon.deployed();
+        deploymentComplete('Diamond', cannon.address, [diamondCut, [deployer]] );
+
+    });
+
+    // Wait a minute after deployment completes and then verify contracts on etherscan
+    console.log('⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...');
+    await delay(60000).then(
+        async () => {
+            console.log('🔍 Verifying contracts on Etherscan...');
+            while(contracts.length) {
+                contract = contracts.shift()
+                await verifyOnEtherscan(contract);
+            }
+        }
+    );
+
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function getSelectors (contract) {
     const signatures = Object.keys(contract.interface.functions);
     const selectors = signatures.reduce((acc, val) => {
@@ -22,61 +101,21 @@ function removeItem (array, item) {
     return array
 }
 
-async function main() {
+function deploymentComplete(name, address, args) {
+    contracts.push({name, address, args});
+    console.log(`✅ ${name} deployed to: ${address}`);
+}
 
-    const accounts = await ethers.provider.listAccounts();
-    const deployer = accounts[0];
-    console.log("Deployer account: ", deployer ? deployer : "not found" && process.exit() );
-
-    // Deploy the Cannnon, Cut, Loupe, Ownership, and Diamond facets
-
-    // Cannon Facet
-    const CannonFacet = await ethers.getContractFactory("CannonFacet");
-    const ncf = await CannonFacet.deploy();
-    await ncf.deployed();
-    const cannonSelectors = getSelectors(ncf);
-    removeItem(cannonSelectors, '0x01ffc9a7'); // EIP-165 supportsInterface() exists in
-    const cannonCut = [ncf.address, FacetCutAction.Add, cannonSelectors];
-    console.log("CannonFacet deployed to:", ncf.address);
-
-    // Diamond Cut Facet
-    const DiamondCutFacet = await ethers.getContractFactory("DiamondCutFacet");
-    const dcf = await DiamondCutFacet.deploy();
-    await dcf.deployed();
-    const diamondCutSelectors = getSelectors(dcf);
-    const diamondCutCut = [dcf.address, FacetCutAction.Add, diamondCutSelectors];
-    console.log("DiamondCutFacet deployed to:", dcf.address);
-
-    // Diamond Loupe Facet
-    const DiamondLoupeFacet = await ethers.getContractFactory("DiamondLoupeFacet");
-    const dlf = await DiamondLoupeFacet.deploy();
-    await dlf.deployed();
-    const diamondLoupeSelectors = getSelectors(dlf);
-    const diamondLoupeCut = [dlf.address, FacetCutAction.Add, diamondLoupeSelectors];
-    console.log("DiamondLoupeFacet deployed to:", dlf.address);
-
-    // Ownership Facet
-    const OwnershipFacet = await ethers.getContractFactory("OwnershipFacet");
-    const osf = await OwnershipFacet.deploy();
-    const ownershipSelectors = getSelectors(osf);
-    const ownershipCut = [osf.address, FacetCutAction.Add, ownershipSelectors];
-    await osf.deployed().then(async () => {
-
-        console.log("OwnershipFacet deployed to:", osf.address);
-
-        // Deploy Diamond with Cut, Loupe, Ownership, and Cannon facets pre-cut
-        const diamondCut = [
-            diamondCutCut,
-            diamondLoupeCut,
-            ownershipCut,
-            cannonCut,
-        ]
-        const Cannon = await ethers.getContractFactory("Diamond");
-        const cannon = await Cannon.deploy(diamondCut, [deployer]);
-        await cannon.deployed();
-
-        console.log("Diamond deployed to:", cannon.address);
-    });
+async function verifyOnEtherscan(contract) {
+    console.log(`\n📋 Verifying ${contract.name}`);
+    try {
+        await hre.run("verify:verify", {
+            address: contract.address,
+            constructorArguments: contract.args,
+        })
+    } catch (e) {
+        console.log(`❌ Failed to verify ${contract.name} on etherscan. ${e.message}`);
+    }
 }
 
 main()
