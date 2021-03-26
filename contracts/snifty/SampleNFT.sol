@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.7.4;
 
-import "./CannonBase.sol";
+import "./Utils.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 /**
  * @title Sample NFT for Unit Testing
  * @author Cliff Hall
  */
-contract SampleNFT is ERC721, CannonBase {
+contract SampleNFT is ERC721, Utils {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 

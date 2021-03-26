@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
  * @notice Manages the Cannon-native NFTs that represent transferable tickets.
  * Only the current holder of a ticket can pick up the associated nifties.
  */
-contract TicketFactory is CannonState, ERC721 {
+contract CannonTicket is CannonState, ERC721 {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 
@@ -27,7 +27,7 @@ contract TicketFactory is CannonState, ERC721 {
     internal
     returns (uint256 ticketId) {
         ticketId = nextTicketNumber;
-        nextTicketNumber = nextTicketNumber + 1;
+        nextTicketNumber = nextTicketNumber + 1; // TODO: SafeMath
         _mint(_owner, ticketId);
         return ticketId;
     }

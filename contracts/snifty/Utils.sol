@@ -3,11 +3,10 @@ pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
 /**
- * @title Nifty Cannon Base
+ * @title Utilities
  * @author Cliff Hall
- * @notice Utilities used by descendant contracts
  */
-contract CannonBase {
+contract Utils {
 
     /**
      * @notice Convert a `uint` value to a `string`
