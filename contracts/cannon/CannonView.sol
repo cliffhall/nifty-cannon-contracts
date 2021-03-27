@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.4;
+pragma solidity 0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./CannonState.sol";
@@ -12,8 +12,6 @@ import "./CannonActivity.sol";
  */
 contract CannonView is CannonActivity {
 
-    using SafeMath for uint256;
-
     /**
      * @notice Check combined count of Will-call Volleys and Tickets
      * @return count the total number of volleys and tickets awaiting the caller
@@ -21,7 +19,7 @@ contract CannonView is CannonActivity {
     function myWillCallCount() public view returns (uint256 count) {
         uint256 volleyCount = willCallVolleys[msg.sender].length;
         uint256 ticketCount = balanceOf(msg.sender);
-        count = volleyCount.add(ticketCount);
+        count = volleyCount + ticketCount;
     }
 
     /**

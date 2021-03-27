@@ -1,38 +1,36 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.4;
+pragma solidity 0.8.0;
 
 import "./Utils.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 /**
  * @title Sample NFT for Unit Testing
  * @author Cliff Hall
  */
-contract SampleNFT is ERC721, Utils {
+contract SampleNFT is ERC721Enumerable, Utils {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 
     string public constant TOKEN_NAME = "SampleNFT";
     string public constant TOKEN_SYMBOL = "SNIFTY";
-    
+
+    /**
+     * @dev Base URI for computing {tokenURI}.
+     */
+    function _baseURI() internal pure override returns (string memory) {
+        return 'https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/';
+    }
+
     /**
      * Mint a Sample NFT
      * @param _owner the address that will own the token
-     * @param _tokenURIBase the base url to which tokenId will be added.
      */
-    function mintSample(address _owner, string memory _tokenURIBase)
+    function mintSample(address _owner)
     public
-    returns (uint256 tokenId, string memory tokenURI) {
-
+    returns (uint256 tokenId) {
         tokenId = totalSupply();
-        tokenURI = strConcat(_tokenURIBase, uintToStr(tokenId));
         _mint(_owner, tokenId);
-        _setTokenURI(tokenId, tokenURI);
-
-        return (
-            tokenId,
-            tokenURI
-        );
     }
 
 }

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.4;
+pragma solidity 0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./CannonState.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 /**
  * @title Nifty Cannon Transferable Ticket Factory
@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
  * @notice Manages the Cannon-native NFTs that represent transferable tickets.
  * Only the current holder of a ticket can claim the associated nifties.
  */
-contract CannonTicket is CannonState, ERC721 {
+contract CannonTicket is CannonState, ERC721Enumerable {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 
@@ -27,7 +27,7 @@ contract CannonTicket is CannonState, ERC721 {
     internal
     returns (uint256 ticketId) {
         ticketId = nextTicketNumber;
-        nextTicketNumber = nextTicketNumber + 1; // TODO: SafeMath
+        nextTicketNumber = nextTicketNumber + 1;
         _mint(_owner, ticketId);
         return ticketId;
     }
