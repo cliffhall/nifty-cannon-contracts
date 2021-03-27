@@ -7,19 +7,19 @@ import "./CannonTicket.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 /**
- * @title Nifty Cannon
+ * @title Nifty Cannon Activity
  * @author Cliff Hall
- * @notice Allows direct or deferred transfer of NFTs from one sender to one or more recipients.
- * TODO: disallow volleys targeting of addresses behind Rampart
+ * @dev Volley activities associated with airdrop, will-call, and ticket modes
  */
 contract CannonActivity is CannonEvents, CannonTicket {
 
     /**
      * @notice Process a Volley
      * This is the Cannon's central transfer mechanism.
-     * It has two operating modes: Airdrop and Will-call.
+     * It has three operating modes: Airdrop and Will-call.
      * In Airdrop mode, all of the NFTs in the Volley will be transferred to the recipient, sender paying gas.
      * In Will-call mode, the volley will be stored, to be later executed by the recipient, who pays the gas.
+     * In Ticket mode, a transferable ticket NFT will be created and sent to the recipient's wallet.
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      * @param _volley a valid Volley struct
      */
@@ -32,7 +32,7 @@ contract CannonActivity is CannonEvents, CannonTicket {
         IERC721 tokenContract = IERC721(_volley.tokenContract);
 
         // Ensure this contract is an approved operator for the NFTs
-        require(tokenContract.isApprovedForAll(sender, address(this)), "Nifty Cannon not approved to transfer sender's NFT's" );
+        require(tokenContract.isApprovedForAll(sender, address(this)), "Nifty Cannon not approved to transfer sender's NFTs" );
 
         // Handle the volley
         if (mode == Mode.AIRDROP) {
@@ -50,7 +50,6 @@ contract CannonActivity is CannonEvents, CannonTicket {
 
             // Emit VolleyTransferred event
             emit VolleyTransferred(sender, recipient, _volley.tokenContract, _volley.tokenIds);
-
 
         } else if (mode == Mode.WILLCALL) {
 

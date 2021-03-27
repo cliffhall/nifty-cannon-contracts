@@ -1,15 +1,16 @@
 const hre = require("hardhat");
 const ethers = hre.ethers;
-const FacetCutAction = {
-    Add: 0,
-    Replace: 1,
-    Remove: 2
-}
 
 let contract, contracts = [];
 const divider = "-".repeat(80);
 
 async function main() {
+
+    const FacetCutAction = {
+        Add: 0,
+        Replace: 1,
+        Remove: 2
+    }
 
     console.log(`\n${divider}\nDeploying. ${new Date()}\n${divider}\n`);
 
@@ -17,7 +18,7 @@ async function main() {
     const deployer = accounts[0];
     console.log("🔱 Deployer account: ", deployer ? deployer : "not found" && process.exit() );
 
-    // Deploy the Cannnon, Cut, Loupe, Ownership, and Diamond facets
+    // Deploy the Cannon, Cut, Loupe, Ownership, and Diamond facets
 
     // Cannon Facet
     const CannonFacet = await ethers.getContractFactory("CannonFacet");

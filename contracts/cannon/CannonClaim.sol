@@ -5,8 +5,9 @@ pragma experimental ABIEncoderV2;
 import "./CannonActivity.sol";
 
 /**
- * @title Nifty Cannon Claim functions
+ * @title Nifty Cannon Claim Activity
  * @author Cliff Hall
+ * @notice Activities related to picking up will-call volleys and claiming tickets
  */
 contract CannonClaim is CannonActivity {
 
@@ -35,12 +36,12 @@ contract CannonClaim is CannonActivity {
         willCallVolleys[msg.sender].pop();
 
         // Process the volley
-        require(processVolley(volley), "Volley failed");
+        processVolley(volley);
         success = true;
     }
 
     /**
-     * @notice Pick up a transferable volley
+     * @notice Pick up Volleys Ticket
      * The caller must own the given ticket (an NFT)
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      * @param _ticketId the id of the transferable ticket
@@ -68,51 +69,51 @@ contract CannonClaim is CannonActivity {
         burnTicket(_ticketId);
 
         // Process the volley
-        require(processVolley(volley), "Volley failed");
+        processVolley(volley);
         success = true;
     }
 
     /**
-     * @notice Claim a specific Volley awaiting the caller
-     * There must be one or more Volleys awaiting the recipient
+     * @notice Claim a specific Volley awaiting the caller.
+     * There must be one or more Volleys awaiting the recipient.
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      * @param _index the index of the volley in the recipient's list of will-call volleys
      */
     function claimVolley(uint256 _index) external {
 
         // Pick up the specified volley
-        require(pickupVolley(_index), "Will call pickupVolley failed");
+        pickupVolley(_index);
     }
 
     /**
-     * @notice Claim all Volleys awaiting the caller
-     * There must be one or more Volleys awaiting the caller
-     * This contract must already be approved as an operator for the NFTs specified in the Volley.
+     * @notice Claim all will-call Volleys awaiting the caller.
+     * There must be one or more will-call Volleys awaiting the caller.
+     * This contract must already be approved as an operator for the NFTs specified in the Volleys.
      */
     function claimAllVolleys() external {
 
         // Get the first volley and process it, looping until all volleys are picked up
         while(willCallVolleys[msg.sender].length > 0) {
-            require(pickupVolley(0), "Will call pickupVolley failed");
+            pickupVolley(0);
         }
     }
 
     /**
-     * @notice Receive a specific Volley awaiting the caller
-     * There must be one or more Volleys awaiting the recipient
+     * @notice Claim a specific Ticket the caller owns.
+     * Caller must own the specified ticket.
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      * @param _ticketId the id of the transferable ticket
      */
     function claimTicket(uint256 _ticketId) external {
 
         // Claim the specified ticket
-        require(pickupTicket(_ticketId), "Ticket claim failed");
+        pickupTicket(_ticketId);
 
     }
 
     /**
-     * @notice Claim all Tickets the caller owns
-     * Caller must own one or more Tickets
+     * @notice Claim all Tickets the caller owns.
+     * Caller must own one or more Tickets.
      * This contract must already be approved as an operator for the NFTs specified in the Volley.
      */
     function claimAllTickets() external {
@@ -122,7 +123,7 @@ contract CannonClaim is CannonActivity {
 
         // Get the first ticket and process it, looping until all volleys are picked up
         while(balanceOf(msg.sender) > 0) {
-            require(pickupTicket(tokenOfOwnerByIndex(msg.sender, 0)), "Ticket claim failed");
+            pickupTicket(tokenOfOwnerByIndex(msg.sender, 0));
         }
 
     }

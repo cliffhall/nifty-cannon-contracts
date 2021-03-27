@@ -8,7 +8,7 @@ import "./CannonActivity.sol";
  * @title Nifty Cannon Send functions
  * @author Cliff Hall
  * @notice Allows direct or deferred transfer of NFTs from one sender to one or more recipients.
- * TODO: disallow volleys targeting of addresses behind Rampart
+ * TODO: Disallow volleys that target addresses behind Rampart
  */
 contract CannonSend is CannonActivity {
 
@@ -18,7 +18,7 @@ contract CannonSend is CannonActivity {
      * @param _volley a valid Volley struct
      */
     function fireVolley(Volley memory _volley) external {
-        require(processVolley(_volley), "Volley failed");
+        processVolley(_volley);
     }
 
     /**
@@ -29,7 +29,7 @@ contract CannonSend is CannonActivity {
     function fireVolleys(Volley[] memory _volleys) external {
         for (uint256 index = 0; index < _volleys.length; index++) {
             Volley memory volley = _volleys[index];
-            require(processVolley(volley), "Volley failed");
+            processVolley(volley);
         }
     }
 }

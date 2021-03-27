@@ -1,12 +1,3 @@
-Compiling 29 files with 0.7.4
-Compilation finished successfully
-Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
-CannonFacet deployed to: 0x49625B314b56b733b61A44D5E3b5F3D3DfDa0c21
-DiamondCutFacet deployed to: 0x06Cb9FF20823d2998D6EDb4aB92B333406588791
-DiamondLoupeFacet deployed to: 0x3762AB4E8a0FF1d69ff17363239ef82A9d8b352a
-OwnershipFacet deployed to: 0x706D08bF60e95EBf545EB477019070877E551A03
-Diamond deployed to: 0x8aff02Bf0eC11508638De12AE93803b0Fb801DcA
-
 --------------------------------------------------------------------------------
 Deploying. Fri Mar 19 2021 19:22:41 GMT-0400 (Eastern Daylight Time)
 --------------------------------------------------------------------------------

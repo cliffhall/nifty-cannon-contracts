@@ -6,15 +6,15 @@ async function main() {
     // Compile everything (in case run by node)
     await hre.run('compile');
 
-    const accounts = await hre.ethers.provider.listAccounts();
+    const accounts = await ethers.provider.listAccounts();
     console.log("Deployer account: ", accounts ? accounts[0] : "not found");
 
     // We get the contracts to deploy
-    const Cannon = await hre.ethers.getContractFactory("Cannon");
+    const Cannon = await ethers.getContractFactory("CannonFacet");
     const cannon = await Cannon.deploy();
     await cannon.deployed();
 
-    const SampleNFT = await hre.ethers.getContractFactory("SampleNFT");
+    const SampleNFT = await ethers.getContractFactory("SampleNFT");
     const snifty = await SampleNFT.deploy();
     await snifty.deployed();
 

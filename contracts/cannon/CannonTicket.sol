@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
  * @title Nifty Cannon Transferable Ticket Factory
  * @author Cliff Hall
  * @notice Manages the Cannon-native NFTs that represent transferable tickets.
- * Only the current holder of a ticket can pick up the associated nifties.
+ * Only the current holder of a ticket can claim the associated nifties.
  */
 contract CannonTicket is CannonState, ERC721 {
 

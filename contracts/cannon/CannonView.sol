@@ -6,8 +6,9 @@ import "./CannonState.sol";
 import "./CannonActivity.sol";
 
 /**
- * @title Nifty Cannon View Functions
+ * @title Nifty Cannon View Activity
  * @author Cliff Hall
+ * @notice View functions that report to the caller about contract state
  */
 contract CannonView is CannonActivity {
 
