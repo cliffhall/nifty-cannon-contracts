@@ -5,10 +5,10 @@ import "./Utils.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 /**
- * @title Sample NFT for Unit Testing
+ * @title Sample ERC721 NFT for Unit Testing
  * @author Cliff Hall
  */
-contract SampleNFT is ERC721Enumerable, Utils {
+contract Sample721 is ERC721Enumerable, Utils {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 

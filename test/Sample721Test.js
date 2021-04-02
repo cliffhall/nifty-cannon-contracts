@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 
-describe("SampleNFT", function() {
+describe("Sample721", function() {
 
 
     let Snifty, snifty;
@@ -15,7 +15,7 @@ describe("SampleNFT", function() {
         operator = accounts[1].address;
 
         // Get the ContractFactory and Signers here.
-        Snifty = await ethers.getContractFactory("SampleNFT");
+        Snifty = await ethers.getContractFactory("Sample721");
         snifty = await Snifty.deploy();
 
     });

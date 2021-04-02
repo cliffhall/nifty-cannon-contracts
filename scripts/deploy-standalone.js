@@ -14,8 +14,8 @@ async function main() {
     const cannon = await Cannon.deploy();
     await cannon.deployed();
 
-    const SampleNFT = await ethers.getContractFactory("SampleNFT");
-    const snifty = await SampleNFT.deploy();
+    const Sample721 = await ethers.getContractFactory("Sample721");
+    const snifty = await Sample721.deploy();
     await snifty.deployed();
 
     console.log("Nifty Cannon deployed to:", cannon.address);
