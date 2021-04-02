@@ -26,7 +26,7 @@ describe("CannonFacet", async function() {
         before( async function () {
 
             // Deploy the contracts
-            const Snifty = await ethers.getContractFactory("SampleNFT");
+            const Snifty = await ethers.getContractFactory("Sample721");
             snifty = await Snifty.deploy();
             await snifty.deployed();
 
@@ -36,7 +36,7 @@ describe("CannonFacet", async function() {
 
             // Pre-mint some NFTs to transfer
             for (let i=0; i<niftiesToMint; i++) {
-                await snifty.mintSample(sender, tokenURIBase);
+                await snifty.mintSample(sender);
             }
 
             // Set approval for Cannon to manage sender's NFTs
@@ -112,13 +112,13 @@ describe("CannonFacet", async function() {
             cannon = await ethers.getContractAt('CannonFacet', diamond.address);
 
             // Deploy the Snifty test contract
-            const Snifty = await ethers.getContractFactory("SampleNFT");
+            const Snifty = await ethers.getContractFactory("Sample721");
             snifty = await Snifty.deploy();
             await snifty.deployed();
 
             // Pre-mint some NFTs to transfer
             for (let i=0; i<niftiesToMint; i++) {
-                await snifty.mintSample(sender, tokenURIBase);
+                await snifty.mintSample(sender);
             }
 
             // Set approval for Cannon to manage sender's NFTs
