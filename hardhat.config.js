@@ -6,10 +6,6 @@ require("solidity-coverage");
 
 module.exports = {
   defaultNetwork: "hardhat",
-  gasReporter: {
-    currency: 'USD',
-    gasPrice: 21
-  },
   networks: {
     hardhat: {
       /*
