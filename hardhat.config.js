@@ -37,6 +37,14 @@ module.exports = {
       }
     }
   },
+  gasReporter: {
+    currency: 'USD',
+    enabled: true,
+    gasPrice: 150,
+    coinmarketcap: environments.coinmarketcap.apiKey,
+    showTimeSpent: true,
+    showMethodSig: true
+  },
   paths: {
     sources: "./contracts",
     tests: "./test",
