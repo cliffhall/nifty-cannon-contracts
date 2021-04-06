@@ -57,8 +57,9 @@ Create a file called `environments.js` with
   * `txNode`: the endpoint for sending ethereum transactions
   * `mnemonic`: a valid ethereum HD wallet seed phrase
 
-- The following info for interacting with Etherscan:
-  * `apiKey`: your etherscan API key
+- The following info for interacting with Etherscan and Coinmarketcap:
+  * `etherscan.apiKey`: your etherscan API key
+  * `coinmarketcap.apiKey`: your coinmarketcap API key
 
 ```javascript
 module.exports = {
@@ -66,7 +67,11 @@ module.exports = {
         "apiKey": "<YOUR_ETHERSCAN_API_KEY>"
     },
 
-    "rinkeby": {
+  "coinmarketcap": {
+    "apiKey": "<YOUR_COINMARKETCAP_API_KEY>"
+  },
+
+  "rinkeby": {
         "forkNode": "https://eth-rinkeby.alchemyapi.io/v2/<YOUR_ALCHEMY_API_KEY>",
         "forkBlock": 7507432,
         "txNode": "https://rinkeby.infura.io/v3/<YOUR_INFURA_API_KEY>",

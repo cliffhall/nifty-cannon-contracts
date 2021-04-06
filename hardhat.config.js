@@ -6,10 +6,6 @@ require("solidity-coverage");
 
 module.exports = {
   defaultNetwork: "hardhat",
-  gasReporter: {
-    currency: 'USD',
-    gasPrice: 21
-  },
   networks: {
     hardhat: {
       /*
@@ -36,6 +32,14 @@ module.exports = {
         runs: 2000
       }
     }
+  },
+  gasReporter: {
+    currency: 'USD',
+    enabled: true,
+    gasPrice: 150,
+    coinmarketcap: environments.coinmarketcap.apiKey,
+    showTimeSpent: true,
+    showMethodSig: true
   },
   paths: {
     sources: "./contracts",
