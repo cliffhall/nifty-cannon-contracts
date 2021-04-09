@@ -3,7 +3,9 @@
 
 Make it rain NFTs!
 
-Send multiple [ERC-721](http://erc721.org/) tokens from the same contract to multiple Ethereum addresses. 
+Send multiple [ERC-721](https://eips.ethereum.org/EIPS/eip-721) tokens to multiple Ethereum addresses. 
+
+Send amounts of multiple [ERC-1155](https://eips.ethereum.org/EIPS/eip-1155) tokens to multiple Ethereum addresses.
 
 ## Features
 * Airdrop mode 
@@ -25,10 +27,11 @@ Send multiple [ERC-721](http://erc721.org/) tokens from the same contract to mul
   - anyone can register to opt out of receiving airdrops
 
 ## Status
-Work in Progress
 * Airdrops working and unit tested
-* Non-transferable will-call volleys working and unit tested
+* Will-call volleys working and unit tested
 * Transferable tickets working and unit tested
+* ERC-721 support working and unit tested
+* ERC-1155 support working and unit tested
 
 ### Unit Test Output
 ![Unit Test Output](images/Unit_Test_Output.png)
