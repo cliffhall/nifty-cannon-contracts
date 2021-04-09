@@ -7,11 +7,12 @@ const eip55 = require("eip55");
 
 class Ticket {
 
-    constructor (ticketId, sender, tokenContract, tokenIds) {
+    constructor (ticketId, sender, tokenContract, tokenIds, amounts) {
         this.ticketId = ticketId;
         this.sender = sender;
         this.tokenContract = tokenContract;
         this.tokenIds = tokenIds;
+        this.amounts = amounts || []; // ERC-1125 use
     }
 
     /**
@@ -20,8 +21,8 @@ class Ticket {
      * @returns {Ticket}
      */
     static fromObject(o) {
-        const {ticketId, sender, tokenContract, tokenIds} = o;
-        return new Ticket(ticketId, sender, tokenContract, tokenIds) ;
+        const {ticketId, sender, tokenContract, tokenIds, amounts} = o;
+        return new Ticket(ticketId, sender, tokenContract, tokenIds, amounts) ;
     }
 
     /**
@@ -37,9 +38,9 @@ class Ticket {
      * @returns {string}
      */
     toString() {
-        const {ticketId, sender, recipient, tokenContract, tokenIds} = this;
+        const {ticketId, sender, recipient, tokenContract, tokenIds, amounts} = this;
         return [
-            ticketId, sender, recipient, tokenContract, tokenIds
+            ticketId, sender, recipient, tokenContract, tokenIds, amounts
         ].join(', ');
     }
 
@@ -109,6 +110,29 @@ class Ticket {
     }
 
     /**
+     * Is this Ticket instance's amounts field valid?
+     * - Can be an empty array
+     * - all elements must be number
+     * - If any elements are present,
+     *   - none can be zero
+     *   - must be same as number of elements as tokenIds
+     * @returns {boolean}
+     */
+    amountsIsValid() {
+        let valid = false;
+        let {amounts, tokenIds} = this;
+        try {
+            valid = (
+                Array.isArray(tokenIds) &&
+                amounts.reduce((valid, tokenId) => valid === valid && typeof tokenId === "number", true) &&
+                (amounts.length === 0 || amounts.length === tokenIds.length)
+            )
+        } catch (e) {}
+        return valid;
+    }
+
+
+    /**
      * Is this Ticket instance valid?
      * @returns {boolean}
      */
@@ -117,7 +141,8 @@ class Ticket {
             this.ticketIdIsValid() &&
             this.senderIsValid() &&
             this.tokenContractIsValid() &&
-            this.tokenIdsIsValid()
+            this.tokenIdsIsValid() &&
+            this.amountsIsValid()
         );
     };
 

@@ -27,6 +27,7 @@ contract CannonTypes {
         address recipient;
         address tokenContract;
         uint256[] tokenIds;
+        uint256[] amounts;
     }
 
     /**
@@ -37,5 +38,6 @@ contract CannonTypes {
         address tokenContract;
         uint256 ticketId;
         uint256[] tokenIds;
+        uint256[] amounts;
     }
 }

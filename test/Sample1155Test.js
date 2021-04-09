@@ -1,32 +1,46 @@
 const { expect } = require("chai");
 
-describe("Sample721", function() {
-
+describe("Sample1155", function() {
 
     let Snifty, snifty;
-    let accounts, sender, operator;
-    const tokenURIBase = "https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/";
+    let accounts, sender, recipient, operator;
 
     beforeEach(async function () {
 
         // Get signers
         accounts = await ethers.getSigners();
         sender = accounts[0].address;
-        operator = accounts[1].address;
+        recipient = accounts[1].address;
+        operator = accounts[2].address;
 
         // Get the ContractFactory and Signers here.
-        Snifty = await ethers.getContractFactory("Sample721");
+        Snifty = await ethers.getContractFactory("Sample1155");
         snifty = await Snifty.deploy();
 
     });
 
     it("Should allow minting", async function() {
 
-        const supply = await snifty.totalSupply();
-        await snifty.mintSample(sender);
-        expect(await snifty.totalSupply()).to.eq(supply + 1);
-        expect(await snifty.ownerOf(0)).to.eq(sender);
-        expect(await snifty.tokenURI(0)).to.eq(`${tokenURIBase}${supply}`);
+        const TOKEN_ID = 12;
+        const AMOUNT = 50;
+
+        await snifty.mintSample(sender, TOKEN_ID, AMOUNT);
+        expect(await snifty.balanceOf(sender, TOKEN_ID)).to.eq(AMOUNT);
+
+    });
+
+    it("Should allow transfer", async function() {
+
+        const TOKEN_ID = 12;
+        const AMOUNT = 25;
+        const TOTAL = AMOUNT * 2;
+
+        await snifty.mintSample(sender, TOKEN_ID, TOTAL);
+        await snifty.safeTransferFrom(sender, recipient, TOKEN_ID, AMOUNT, []);
+
+        expect(await snifty.balanceOf(sender, TOKEN_ID)).to.eq(AMOUNT);
+        expect(await snifty.balanceOf(recipient, TOKEN_ID)).to.eq(AMOUNT);
+
     });
 
     it("Should allow owner to set transfer approval to an operator", async function() {

@@ -8,12 +8,13 @@ const eip55 = require("eip55");
 
 class Volley {
 
-    constructor (mode, sender, recipient, tokenContract, tokenIds) {
+    constructor (mode, sender, recipient, tokenContract, tokenIds, amounts) {
         this.mode = mode;
         this.sender = sender;
         this.recipient = recipient;
         this.tokenContract = tokenContract;
         this.tokenIds = tokenIds;
+        this.amounts = amounts || []; // ERC-1125 use
     }
 
     /**
@@ -22,8 +23,8 @@ class Volley {
      * @returns {Volley}
      */
     static fromObject(o) {
-        const {mode, sender, recipient, tokenContract, tokenIds} = o;
-        return new Volley(mode, sender, recipient, tokenContract, tokenIds) ;
+        const {mode, sender, recipient, tokenContract, tokenIds, amounts} = o;
+        return new Volley(mode, sender, recipient, tokenContract, tokenIds, amounts) ;
     }
 
     /**
@@ -39,9 +40,9 @@ class Volley {
      * @returns {boolean}
      */
     toString() {
-        const {mode, sender, recipient, tokenContract, tokenIds} = this;
+        const {mode, sender, recipient, tokenContract, tokenIds, amounts} = this;
         return [
-            mode, sender, recipient, tokenContract, tokenIds
+            mode, sender, recipient, tokenContract, tokenIds, amounts
         ].join(', ');
     }
 
@@ -127,6 +128,29 @@ class Volley {
     }
 
     /**
+     * Is this Volley instance's amounts field valid?
+     * - Can be an empty array
+     * - all elements must be number
+     * - If any elements are present,
+     *   - none can be zero
+     *   - must be same as number of elements as tokenIds
+     * @returns {boolean}
+     */
+    amountsIsValid() {
+        let valid = false;
+        let {amounts, tokenIds} = this;
+        try {
+            valid = (
+                Array.isArray(tokenIds) &&
+                amounts.reduce((valid, tokenId) => valid === valid && typeof tokenId === "number", true) &&
+                (amounts.length === 0 || amounts.length === tokenIds.length)
+            )
+        } catch (e) {}
+        return valid;
+    }
+
+
+    /**
      * Is this Volley instance valid?
      * @returns {boolean}
      */
@@ -136,7 +160,8 @@ class Volley {
             this.senderIsValid() &&
             this.recipientIsValid() &&
             this.tokenContractIsValid() &&
-            this.tokenIdsIsValid()
+            this.tokenIdsIsValid() &&
+            this.amountsIsValid()
         );
     };
 
