@@ -7,7 +7,7 @@ describe("Sample721", function() {
     let accounts, sender, operator;
     const tokenURIBase = "https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/";
 
-    before(async function () {
+    beforeEach(async function () {
 
         // Get signers
         accounts = await ethers.getSigners();
@@ -38,7 +38,6 @@ describe("Sample721", function() {
         expect (await snifty.isApprovedForAll(sender, operator)).is.true;
 
     });
-
 
     it("Should allow owner to remove transfer approval from an operator", async function() {
 

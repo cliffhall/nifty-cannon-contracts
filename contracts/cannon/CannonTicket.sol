@@ -34,7 +34,7 @@ contract CannonTicket is CannonState, ERC721Enumerable {
 
     /**
      * Burn a ticket
-     * @param _ticketId the address that will own the ticket
+     * @param _ticketId the ticket to burn
      */
     function burnTicket(uint256 _ticketId)
     internal

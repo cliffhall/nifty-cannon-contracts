@@ -24,27 +24,26 @@ contract CannonView is CannonActivity {
 
     /**
      * @notice Get the caller's will-call volleys
-     * @return tickets the volleys awaiting the caller
+     * @return volleys the volleys awaiting the caller
      */
-    function myVolleys() public view returns (Volley[] memory) {
+    function myVolleys() public view returns (Volley[] memory volleys) {
         uint256 volleyCount = willCallVolleys[msg.sender].length;
-        Volley[] memory volleys = new Volley[](volleyCount);
+        volleys = new Volley[](volleyCount);
         if (volleyCount > 0) {
             for (uint256 i = 0; i < volleyCount; i++) {
                 Volley memory volley = willCallVolleys[msg.sender][i];
                 volleys[i] = volley;
             }
         }
-        return volleys;
     }
 
     /**
      * @notice Get the caller's transferable tickets
      * @return tickets the tickets awaiting the caller
      */
-    function myTickets() public view returns (Ticket[] memory) {
+    function myTickets() public view returns (Ticket[] memory tickets) {
         uint256 ticketCount = balanceOf(msg.sender);
-        Ticket[] memory tickets = new Ticket[](ticketCount);
+        tickets = new Ticket[](ticketCount);
         if (ticketCount > 0) {
             for (uint256 i = 0; i < ticketCount; i++) {
                 uint256 ticketId = tokenOfOwnerByIndex(msg.sender, i);
@@ -52,7 +51,6 @@ contract CannonView is CannonActivity {
                 tickets[i] = ticket;
             }
         }
-        return tickets;
     }
 
 }

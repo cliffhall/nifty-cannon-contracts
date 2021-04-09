@@ -23,4 +23,5 @@ contract Sample1155 is ERC1155, Utils {
     function mintSample(address _owner, uint256 _tokenId, uint256 _amount) public {
         _mint(_owner, _tokenId, _amount, "");
     }
+
 }

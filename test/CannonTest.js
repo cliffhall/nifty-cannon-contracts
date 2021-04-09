@@ -7,8 +7,9 @@ const Ticket = require("../domain/Ticket");
 
 describe("CannonFacet", async function() {
 
-    let snifty, cannon, accounts, sender;
-    const tokenURIBase = "https://snifty.token/";
+    let snifty, multi, cannon, accounts, sender;
+    const multiTokenId1 = 0;
+    const multiTokenId2 = 1;
     const niftiesToMint = 50;
 
     before( async function () {
@@ -21,7 +22,7 @@ describe("CannonFacet", async function() {
 
     });
 
-    describe("As a standalone contract, invoked directly", function() {
+    describe.skip("As a standalone contract, invoked directly", function() {
 
         before( async function () {
 
@@ -48,7 +49,7 @@ describe("CannonFacet", async function() {
 
     })
 
-    describe("As a diamond facet, invoked via diamond proxy", function() {
+    describe("As a single diamond facet, invoked via diamond proxy", function() {
 
         before( async function () {
 
@@ -111,18 +112,28 @@ describe("CannonFacet", async function() {
             // Cannon Facet
             cannon = await ethers.getContractAt('CannonFacet', diamond.address);
 
-            // Deploy the Snifty test contract
+            // Deploy the Sample721 contract
             const Snifty = await ethers.getContractFactory("Sample721");
             snifty = await Snifty.deploy();
             await snifty.deployed();
 
-            // Pre-mint some NFTs to transfer
+            // Pre-mint some ERC-721 NFTs to transfer
             for (let i=0; i<niftiesToMint; i++) {
                 await snifty.mintSample(sender);
             }
 
+            // Deploy the Sample1155 contract
+            const Multi = await ethers.getContractFactory("Sample1155");
+            multi = await Multi.deploy();
+            await multi.deployed();
+
+            // Pre-mint some ERC-1155 NFTs to transfer
+            await multi.mintSample(sender, multiTokenId1, niftiesToMint);
+            await multi.mintSample(sender, multiTokenId2, niftiesToMint);
+
             // Set approval for Cannon to manage sender's NFTs
             await snifty.setApprovalForAll(cannon.address, true);
+            await multi.setApprovalForAll(cannon.address, true);
 
             function getSelectors (contract) {
                 const signatures = Object.keys(contract.interface.functions);
@@ -150,78 +161,179 @@ describe("CannonFacet", async function() {
     function testCannon() {
 
         let ticketId = 0;
+        context("fireVolley()", async function() {
 
-        it("Should allow sender to airdrop multiple NFTs to a single recipient with fireVolley", async function() {
+            it("Should allow sender to airdrop multiple 721 NFTs to a single recipient with fireVolley", async function() {
 
-            // Recipient
-            const account = accounts[1];
-            const address = account.address;
+                // Recipient
+                const account = accounts[1];
+                const address = account.address;
 
-            // Construct the Volley and ensure it is valid
-            const volley = new Volley(
-                Mode.AIRDROP,
-                sender,
-                address,
-                snifty.address,
-                [0,1]
-            );
-            expect(volley.isValid()).is.true;
+                // Construct the Volley and ensure it is valid
+                const volley = new Volley(
+                    Mode.AIRDROP,
+                    sender,
+                    address,
+                    snifty.address,
+                    [0,1]
+                );
+                expect(volley.isValid()).is.true;
 
-            // Execute the airdrop send
-            await expect(cannon.fireVolley(volley))
-                .to.emit(snifty, 'Transfer')
-                .withArgs(sender, address, 0);
+                // Execute the airdrop send
+                await expect(cannon.fireVolley(volley))
+                    .to.emit(snifty, 'Transfer')
+                    .withArgs(sender, address, 0);
 
-            // Ensure recipient 1 received all their tokens
-            for (let i=0; i<volley.tokenIds.length; i++){
-                expect(await snifty.ownerOf(volley.tokenIds[i])).equal(address);
-            }
+                // Ensure recipient 1 received all their tokens
+                for (let i=0; i<volley.tokenIds.length; i++){
+                    expect(await snifty.ownerOf(volley.tokenIds[i])).equal(address);
+                }
 
-        });
+            });
 
-        it("Should allow sender to airdrop multiple NFTs to multiple recipients with fireVolleys", async function() {
+            it("Should allow sender to airdrop an amount of an 1155 NFT to a single recipient with fireVolley", async function() {
 
-            // Recipients
-            const recip1 = accounts[2].address;
-            const recip2 = accounts[3].address;
+                // Recipient
+                const account = accounts[1];
+                const recipient = account.address;
+                const amount = 10;
 
-            // Construct the Volley and ensure it is valid
-            const volley1 = new Volley(
-                Mode.AIRDROP,
-                sender,
-                recip1,
-                snifty.address,
-                [2,3]
-            );
-            expect(volley1.isValid()).is.true;
+                // Construct the Volley and ensure it is valid
+                const volley = new Volley(
+                    Mode.AIRDROP,
+                    sender,
+                    recipient,
+                    multi.address,
+                    [multiTokenId1],
+                    [amount]
+                );
+                expect(volley.isValid()).is.true;
 
-            // Construct the Volley and ensure it is valid
-            const volley2 = new Volley(
-                Mode.AIRDROP,
-                sender,
-                recip2,
-                snifty.address,
-                [4,5]
-            );
-            expect(volley2.isValid()).is.true;
+                // Execute the airdrop send
+                await expect(cannon.fireVolley(volley))
+                    .to.emit(multi, 'TransferSingle')
+                    .withArgs(cannon.address, sender, recipient, multiTokenId1, amount);
 
-            const volleys = [volley1, volley2];
+                // Ensure recipient received all their tokens
+                expect(await multi.balanceOf(recipient, multiTokenId1)).equal(amount);
 
-            // Execute the airdrop send
-            await cannon.fireVolleys(volleys);
-
-            // Ensure recipient 2 received all their tokens
-            for (let i=0; i<volley1.tokenIds.length; i++){
-                expect(await snifty.ownerOf(volley1.tokenIds[i])).equal(recip1);
-            }
-
-            // Ensure recipient 3 received all their tokens
-            for (let i=0; i<volley2.tokenIds.length; i++){
-                expect(await snifty.ownerOf(volley2.tokenIds[i])).equal(recip2);
-            }
+            });
 
         });
 
+        context("fireVolleys()", async function() {
+
+            it("Should allow sender to airdrop multiple 721 NFTs to multiple recipients", async function() {
+
+                // Recipients
+                const recip1 = accounts[2].address;
+                const recip2 = accounts[3].address;
+
+                // Construct the Volley and ensure it is valid
+                const volley1 = new Volley(
+                    Mode.AIRDROP,
+                    sender,
+                    recip1,
+                    snifty.address,
+                    [2,3]
+                );
+                expect(volley1.isValid()).is.true;
+
+                // Construct the Volley and ensure it is valid
+                const volley2 = new Volley(
+                    Mode.AIRDROP,
+                    sender,
+                    recip2,
+                    snifty.address,
+                    [4,5]
+                );
+                expect(volley2.isValid()).is.true;
+
+                const volleys = [volley1, volley2];
+
+                // Execute the airdrop send
+                await cannon.fireVolleys(volleys);
+
+                // Ensure recipient 2 received all their tokens
+                for (let i=0; i<volley1.tokenIds.length; i++){
+                    expect(await snifty.ownerOf(volley1.tokenIds[i])).equal(recip1);
+                }
+
+                // Ensure recipient 3 received all their tokens
+                for (let i=0; i<volley2.tokenIds.length; i++){
+                    expect(await snifty.ownerOf(volley2.tokenIds[i])).equal(recip2);
+                }
+
+            });
+
+            it("Should allow sender to airdrop amounts of multiple 1155 NFTs to multiple recipients", async function() {
+
+                // Recipients
+                const recip1 = accounts[2].address;
+                const recip2 = accounts[3].address;
+                const amount = 10;
+
+                // Construct the Volley and ensure it is valid
+                const volley1 = new Volley(
+                    Mode.AIRDROP,
+                    sender,
+                    recip1,
+                    multi.address,
+                    [multiTokenId1],
+                    [amount]
+                );
+                expect(volley1.isValid()).is.true;
+
+                // Construct the Volley and ensure it is valid
+                const volley2 = new Volley(
+                    Mode.AIRDROP,
+                    sender,
+                    recip2,
+                    multi.address,
+                    [multiTokenId1],
+                    [amount]
+                );
+                expect(volley2.isValid()).is.true;
+
+                const volleys = [volley1, volley2];
+
+                // Execute the airdrop send
+                await cannon.fireVolleys(volleys);
+
+                // Make sure they arrived
+                expect(await multi.balanceOf(recip1, multiTokenId1)).equal(amount);
+                expect(await multi.balanceOf(recip2, multiTokenId1)).equal(amount);
+
+            });
+
+            it("Should allow sender to airdrop amounts of multiple 1155 NFTs to a single recipient as a batch", async function() {
+
+                // Recipients
+                const recip1 = accounts[4].address;
+                const amount = 10;
+
+                // Construct the Volley and ensure it is valid
+                const volley = new Volley(
+                    Mode.AIRDROP,
+                    sender,
+                    recip1,
+                    multi.address,
+                    [multiTokenId1, multiTokenId2],
+                    [amount, amount]
+                );
+                expect(volley.isValid()).is.true;
+
+                // Execute the airdrop send
+                await cannon.fireVolley(volley);
+
+                // Make sure they arrived
+                expect(await multi.balanceOf(recip1, multiTokenId1)).equal(amount);
+                expect(await multi.balanceOf(recip1, multiTokenId2)).equal(amount);
+
+            });
+
+        });
+        
         it("Should allow recipient to pickup a single will-call volley with claimVolley", async function() {
 
             // Recipient
@@ -391,7 +503,7 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTransferred")
-                .withArgs(sender, recipient, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, snifty.address, volley.tokenIds, volley.amounts);
 
         });
 
@@ -417,7 +529,7 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyStored")
-                .withArgs(sender, recipient, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, snifty.address, volley.tokenIds, volley.amounts);
 
         });
 
@@ -443,13 +555,13 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyStored")
-                .withArgs(sender, recipient, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, snifty.address, volley.tokenIds, volley.amounts);
 
             // Pickup recipient's volley on will-call
             await expect(cannon.connect(account).claimVolley(0))
                 .to
                 .emit(cannon, "VolleyTransferred")
-                .withArgs(sender, recipient, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, snifty.address, volley.tokenIds, volley.amounts);
 
         });
 
@@ -475,7 +587,7 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTicketed")
-                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds, volley.amounts);
 
             // Recipient should own the the NFT for the ticket
             expect(await cannon.ownerOf(ticketId)).equal(recipient);
@@ -507,7 +619,7 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTicketed")
-                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds, volley.amounts);
 
         });
 
@@ -562,13 +674,13 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTicketed")
-                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds, volley.amounts);
 
             // Claim recipient's ticket
             await expect(cannon.connect(account).claimTicket(ticketId))
                 .to
                 .emit(cannon, "VolleyTransferred")
-                .withArgs(sender, recipient, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, snifty.address, volley.tokenIds, volley.amounts);
 
         });
 
@@ -601,7 +713,7 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTicketed")
-                .withArgs(sender, recip1, ticketId, snifty.address, volley.tokenIds);
+                .withArgs(sender, recip1, ticketId, snifty.address, volley.tokenIds, volley.amounts);
 
             // Transfer it
             await cannon.connect(account).transferFrom(recip1, recip2, ticketId);
@@ -642,7 +754,7 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTicketed")
-                .withArgs(sender, recip1, ticketId, snifty.address, volley.tokenIds);
+                .withArgs(sender, recip1, ticketId, snifty.address, volley.tokenIds, volley.amounts);
 
             // Transfer it
             await cannon.connect(account).transferFrom(recip1, recip2, ticketId);
@@ -651,7 +763,7 @@ describe("CannonFacet", async function() {
             await expect(cannon.connect(buyer).claimTicket(ticketId))
                 .to
                 .emit(cannon, "VolleyTransferred")
-                .withArgs(sender, recip2, snifty.address, volley.tokenIds);
+                .withArgs(sender, recip2, snifty.address, volley.tokenIds, volley.amounts);
 
         });
 
@@ -680,13 +792,13 @@ describe("CannonFacet", async function() {
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTicketed")
-                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, ticketId, snifty.address, volley.tokenIds, volley.amounts);
 
             // Claim recipient's ticket
             await expect(cannon.connect(account).claimTicket(ticketId))
                 .to
                 .emit(cannon, "VolleyTransferred")
-                .withArgs(sender, recipient, snifty.address, volley.tokenIds);
+                .withArgs(sender, recipient, snifty.address, volley.tokenIds, volley.amounts);
 
             // Attempt to ticket again
             await expect(cannon.connect(account).claimTicket(ticketId))

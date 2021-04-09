@@ -1,18 +1,17 @@
 const { expect } = require("chai");
 
-describe("Sample721", function() {
-
+describe("Sample1155", function() {
 
     let Snifty, snifty;
-    let accounts, sender, operator;
-    const tokenURIBase = "https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/{id}.json";
+    let accounts, sender, recipient, operator;
 
-    before(async function () {
+    beforeEach(async function () {
 
         // Get signers
         accounts = await ethers.getSigners();
         sender = accounts[0].address;
-        operator = accounts[1].address;
+        recipient = accounts[1].address;
+        operator = accounts[2].address;
 
         // Get the ContractFactory and Signers here.
         Snifty = await ethers.getContractFactory("Sample1155");
@@ -30,6 +29,20 @@ describe("Sample721", function() {
 
     });
 
+    it("Should allow transfer", async function() {
+
+        const TOKEN_ID = 12;
+        const AMOUNT = 25;
+        const TOTAL = AMOUNT * 2;
+
+        await snifty.mintSample(sender, TOKEN_ID, TOTAL);
+        await snifty.safeTransferFrom(sender, recipient, TOKEN_ID, AMOUNT, []);
+
+        expect(await snifty.balanceOf(sender, TOKEN_ID)).to.eq(AMOUNT);
+        expect(await snifty.balanceOf(recipient, TOKEN_ID)).to.eq(AMOUNT);
+
+    });
+
     it("Should allow owner to set transfer approval to an operator", async function() {
 
         // Set approval for operator to manage sender's NFTs
@@ -39,7 +52,6 @@ describe("Sample721", function() {
         expect (await snifty.isApprovedForAll(sender, operator)).is.true;
 
     });
-
 
     it("Should allow owner to remove transfer approval from an operator", async function() {
 
