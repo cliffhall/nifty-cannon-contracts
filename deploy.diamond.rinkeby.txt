@@ -60,3 +60,67 @@ for verification on Etherscan. Waiting for verification result...
 
 Successfully verified contract Diamond on Etherscan.
 https://rinkeby.etherscan.io/address/0x4130D5e38060A55FEd2bEea05F00ab7514698a60#code
+
+--------------------------------------------------------------------------------
+Deploying. Sat Apr 10 2021 14:04:16 GMT-0400 (Eastern Daylight Time)
+--------------------------------------------------------------------------------
+
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+✅ CannonFacet deployed to: 0xBd014aA8478b2Bf0e9c16404c0C950467Ac0B36C
+✅ DiamondCutFacet deployed to: 0xd0Bb7b59A16949e3D532f60ea968ef6cAe7E4e0C
+✅ DiamondLoupeFacet deployed to: 0xb797aD1810B08B78Bc8FEA7cE13120f343841a15
+✅ OwnershipFacet deployed to: 0xf20df836ce791D3841f7A9d4b45193c1D37b1A7f
+✅ Diamond deployed to: 0xb5Bf5793c7F4Cd8d4FB5D76B88FFd0D370F00B31
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying CannonFacet
+Nothing to compile
+Compiling 1 file with 0.8.0
+Successfully submitted source code for contract
+contracts/facets/CannonFacet.sol:CannonFacet at 0xBd014aA8478b2Bf0e9c16404c0C950467Ac0B36C
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract CannonFacet on Etherscan.
+https://rinkeby.etherscan.io/address/0xBd014aA8478b2Bf0e9c16404c0C950467Ac0B36C#code
+
+📋 Verifying DiamondCutFacet
+Compiling 39 files with 0.8.0
+Compilation finished successfully
+Compiling 1 file with 0.8.0
+Successfully submitted source code for contract
+contracts/facets/DiamondCutFacet.sol:DiamondCutFacet at 0xd0Bb7b59A16949e3D532f60ea968ef6cAe7E4e0C
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract DiamondCutFacet on Etherscan.
+https://rinkeby.etherscan.io/address/0xd0Bb7b59A16949e3D532f60ea968ef6cAe7E4e0C#code
+
+📋 Verifying DiamondLoupeFacet
+Nothing to compile
+Compiling 1 file with 0.8.0
+Successfully submitted source code for contract
+contracts/facets/DiamondLoupeFacet.sol:DiamondLoupeFacet at 0xb797aD1810B08B78Bc8FEA7cE13120f343841a15
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract DiamondLoupeFacet on Etherscan.
+https://rinkeby.etherscan.io/address/0xb797aD1810B08B78Bc8FEA7cE13120f343841a15#code
+
+📋 Verifying OwnershipFacet
+Nothing to compile
+Compiling 1 file with 0.8.0
+Successfully submitted source code for contract
+contracts/facets/OwnershipFacet.sol:OwnershipFacet at 0xf20df836ce791D3841f7A9d4b45193c1D37b1A7f
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract OwnershipFacet on Etherscan.
+https://rinkeby.etherscan.io/address/0xf20df836ce791D3841f7A9d4b45193c1D37b1A7f#code
+
+📋 Verifying Diamond
+Nothing to compile
+Compiling 1 file with 0.8.0
+Successfully submitted source code for contract
+contracts/Diamond.sol:Diamond at 0xb5Bf5793c7F4Cd8d4FB5D76B88FFd0D370F00B31
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Diamond on Etherscan.
+https://rinkeby.etherscan.io/address/0xb5Bf5793c7F4Cd8d4FB5D76B88FFd0D370F00B31#code

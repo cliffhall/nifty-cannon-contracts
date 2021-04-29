@@ -12,11 +12,11 @@ async function main() {
         Remove: 2
     }
 
-    console.log(`\n${divider}\nDeploying. ${new Date()}\n${divider}\n`);
+    console.log(`\n${divider}\nNetwork: ${hre.network.name}\nDeploying. ${new Date()}\n${divider}\n`);
 
     const accounts = await ethers.provider.listAccounts();
     const deployer = accounts[0];
-    console.log("🔱 Deployer account: ", deployer ? deployer : "not found" && process.exit() );
+    console.log("🔱Deployer account: ", deployer ? deployer : "not found" && process.exit() );
 
     // Deploy the Cannon, Cut, Loupe, Ownership, and Diamond facets
 
@@ -67,6 +67,9 @@ async function main() {
         deploymentComplete('Diamond', cannon.address, [diamondCut, [deployer]] );
 
     });
+
+    // Bail now if deploying locally
+    if (hre.network.name === 'hardhat') process.exit();
 
     // Wait a minute after deployment completes and then verify contracts on etherscan
     console.log('⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...');

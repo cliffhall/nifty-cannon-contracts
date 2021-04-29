@@ -1,0 +1,32 @@
+--------------------------------------------------------------------------------
+Deploying. Sat Apr 10 2021 16:37:30 GMT-0400 (Eastern Daylight Time)
+--------------------------------------------------------------------------------
+
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+✅ Sample721 deployed to: 0xC79350FdA35f82392c6FEd24F2507FA3A84F5eb7
+✅ Sample1155 deployed to: 0xF5BB3BC4427427dab82f51bBAE5A56B5BE24aF8A
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying Sample721
+Nothing to compile
+Compiling 1 file with 0.8.0
+Successfully submitted source code for contract
+contracts/snifty/Sample721.sol:Sample721 at 0xC79350FdA35f82392c6FEd24F2507FA3A84F5eb7
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Sample721 on Etherscan.
+https://rinkeby.etherscan.io/address/0xC79350FdA35f82392c6FEd24F2507FA3A84F5eb7#code
+
+📋 Verifying Sample1155
+Compiling 39 files with 0.8.0
+Compilation finished successfully
+Compiling 1 file with 0.8.0
+Successfully submitted source code for contract
+contracts/snifty/Sample1155.sol:Sample1155 at 0xF5BB3BC4427427dab82f51bBAE5A56B5BE24aF8A
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Sample1155 on Etherscan.
+https://rinkeby.etherscan.io/address/0xF5BB3BC4427427dab82f51bBAE5A56B5BE24aF8A#code
+
+

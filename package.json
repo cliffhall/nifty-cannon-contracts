@@ -22,25 +22,28 @@
   "scripts": {
     "build": "npx hardhat compile",
     "test": "npx hardhat test",
-    "deploy:local": "npx hardhat run --network hardhat scripts/deploy-standalone.js",
-    "deploy:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-standalone.js >> deploy.rinkeby.txt",
-    "deploy:mainnet": "npx hardhat run --network mainnet scripts/deploy-standalone.js >> deploy.mainnet.txt",
     "deploy:diamond:local": "npx hardhat run --network hardhat scripts/deploy-as-diamond.js",
     "deploy:diamond:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-as-diamond.js >> deploy.diamond.rinkeby.txt",
-    "deploy:diamond:mainnet": "npx hardhat run --network mainnet scripts/deploy-as-diamond.js >> deploy.diamond.mainnet.txt"
+    "deploy:diamond:mainnet": "npx hardhat run --network mainnet scripts/deploy-as-diamond.js >> deploy.diamond.mainnet.txt",
+    "deploy:snifties:local": "npx hardhat run --network hardhat scripts/deploy-standalone.js",
+    "deploy:snifties:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-snifties.js >> deploy.snifties.txt",
+    "deploy:snifties:mainnet": "npx hardhat run --network mainnet scripts/deploy-snifties.js >> deploy.snifties.txt",
+    "deploy:standalone:local": "npx hardhat run --network hardhat scripts/deploy-snifties.js",
+    "deploy:standalone:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-standalone.js >> deploy.rinkeby.txt",
+    "deploy:standalone:mainnet": "npx hardhat run --network mainnet scripts/deploy-standalone.js >> deploy.mainnet.txt"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.0.0"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.1",
-    "@nomiclabs/hardhat-etherscan": "^2.1.1",
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-etherscan": "^2.1.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "chai": "^4.2.0",
     "eip55": "^2.1.0",
     "ethereum-waffle": "^3.2.0",
-    "ethers": "^5.0.19",
-    "hardhat": "^2.0.6",
+    "ethers": "^5.1.4",
+    "hardhat": "^2.2.1",
     "hardhat-gas-reporter": "^1.0.4",
     "solidity-coverage": "^0.7.16"
   }
