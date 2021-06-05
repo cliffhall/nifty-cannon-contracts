@@ -26,8 +26,8 @@
     "deploy:diamond:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-as-diamond.js >> deploy.diamond.rinkeby.txt",
     "deploy:diamond:mainnet": "npx hardhat run --network mainnet scripts/deploy-as-diamond.js >> deploy.diamond.mainnet.txt",
     "deploy:snifties:local": "npx hardhat run --network hardhat scripts/deploy-standalone.js",
-    "deploy:snifties:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-snifties.js >> deploy.snifties.txt",
-    "deploy:snifties:mainnet": "npx hardhat run --network mainnet scripts/deploy-snifties.js >> deploy.snifties.txt",
+    "deploy:snifties:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-snifties.js >> deploy.snifties.rinkeby.txt",
+    "deploy:snifties:mainnet": "npx hardhat run --network mainnet scripts/deploy-snifties.js >> deploy.snifties.mainnet.txt",
     "deploy:standalone:local": "npx hardhat run --network hardhat scripts/deploy-snifties.js",
     "deploy:standalone:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-standalone.js >> deploy.rinkeby.txt",
     "deploy:standalone:mainnet": "npx hardhat run --network mainnet scripts/deploy-standalone.js >> deploy.mainnet.txt"
