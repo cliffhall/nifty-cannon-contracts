@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.0;
-pragma experimental ABIEncoderV2;
+pragma solidity ^0.8.0;
 
 import "./CannonEvents.sol";
 import "./CannonTicket.sol";
@@ -11,7 +10,7 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
  * @author Cliff Hall
  * @dev Volley activities associated with airdrop, will-call, and ticket modes
  */
-contract CannonActivity is CannonEvents, CannonTicket {
+contract CannonActivity is CannonTicket, CannonEvents {
 
     /**
      * @notice Process a Volley

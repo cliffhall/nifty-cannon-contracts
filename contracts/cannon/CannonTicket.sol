@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.0;
-pragma experimental ABIEncoderV2;
+pragma solidity ^0.8.0;
 
 import "./CannonState.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -11,12 +10,21 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
  * @notice Manages the Cannon-native NFTs that represent transferable tickets.
  * Only the current holder of a ticket can claim the associated nifties.
  */
-contract CannonTicket is CannonState, ERC721Enumerable {
+contract CannonTicket is ERC721Enumerable, CannonState {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 
+    string public constant TICKET_URI = "ipfs://QmdEkQjAXJAjPZtJFzJZJPxnBtu2FsoDGfH7EofA5sc6vT";
     string public constant TOKEN_NAME = "Nifty Cannon Transferable Ticket";
     string public constant TOKEN_SYMBOL = "FODDER";
+
+    /**
+ * @dev See {IERC721Metadata-tokenURI}.
+ */
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+        return TICKET_URI;
+    }
 
     /**
      * Mint a ticket
@@ -41,4 +49,5 @@ contract CannonTicket is CannonState, ERC721Enumerable {
     {
         _burn(_ticketId);
     }
+
 }

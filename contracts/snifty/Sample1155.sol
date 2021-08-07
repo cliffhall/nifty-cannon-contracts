@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.0;
+pragma solidity ^0.8.0;
 
 import "./Utils.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
@@ -12,7 +12,7 @@ contract Sample1155 is ERC1155, Utils {
 
     constructor() ERC1155(BASE_URI) {}
 
-    string public constant BASE_URI = 'https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/{id}.json';
+    string public constant BASE_URI = 'https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/';
 
     /**
      * Mint a Sample NFT

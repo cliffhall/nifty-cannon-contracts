@@ -22,7 +22,7 @@ describe("CannonFacet", async function() {
 
     });
 
-    describe.skip("As a standalone contract, invoked directly", function() {
+    describe("As a standalone contract, invoked directly", function() {
 
         before( async function () {
 
@@ -30,6 +30,11 @@ describe("CannonFacet", async function() {
             const Snifty = await ethers.getContractFactory("Sample721");
             snifty = await Snifty.deploy();
             await snifty.deployed();
+
+            // Deploy the Sample1155 contract
+            const Multi = await ethers.getContractFactory("Sample1155");
+            multi = await Multi.deploy();
+            await multi.deployed();
 
             const Cannon = await ethers.getContractFactory("CannonFacet");
             cannon = await Cannon.deploy();
@@ -40,8 +45,13 @@ describe("CannonFacet", async function() {
                 await snifty.mintSample(sender);
             }
 
+            // Pre-mint some ERC-1155 NFTs to transfer
+            await multi.mintSample(sender, multiTokenId1, niftiesToMint);
+            await multi.mintSample(sender, multiTokenId2, niftiesToMint);
+
             // Set approval for Cannon to manage sender's NFTs
             await snifty.setApprovalForAll(cannon.address, true);
+            await multi.setApprovalForAll(cannon.address, true);
 
         });
 
@@ -157,7 +167,7 @@ describe("CannonFacet", async function() {
 
     })
 
-    // The tests, within outer scope
+    // Reusable tests
     function testCannon() {
 
         let ticketId = 0;
