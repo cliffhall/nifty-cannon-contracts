@@ -31,8 +31,8 @@ contract CannonActivity is CannonTicket, CannonEvents {
         uint256[] memory tokenIds = _volley.tokenIds;
         uint256[] memory amounts = _volley.amounts;
         address tokenContract = _volley.tokenContract;
-        // Possible token contract interfaces
 
+        // Possible token contract interfaces
         IERC721 singleTokenContract = IERC721(tokenContract);
         IERC1155 multiTokenContract = IERC1155(tokenContract);
 

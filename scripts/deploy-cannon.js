@@ -9,7 +9,7 @@ async function main() {
     // Compile everything (in case run by node)
     await hre.run('compile');
 
-    console.log(`${divider}\nSample NFT Deployer\n${divider}`);
+    console.log(`${divider}\nNifty Cannon Deployer\n${divider}`);
     console.log(`⛓  Network: ${hre.network.name}\n📅 ${new Date()}`);
 
     const accounts = await ethers.provider.listAccounts();
@@ -17,17 +17,11 @@ async function main() {
     console.log("🔱 Deployer account: ", deployer ? deployer : "not found" && process.exit() );
     console.log(divider);
 
-    // Deploy Sample 721
-    const Sample721 = await ethers.getContractFactory("Sample721");
-    const snifty = await Sample721.deploy();
-    await snifty.deployed();
-    deploymentComplete('Sample721', snifty.address, [] );
-
-    // Deploy Sample 1155
-    const Sample1155 = await ethers.getContractFactory("Sample1155");
-    const multi = await Sample1155.deploy();
-    await multi.deployed();
-    deploymentComplete('Sample1155', multi.address, [] );
+    // Deploy Cannon
+    const Cannon = await ethers.getContractFactory("NiftyCannon");
+    const cannon = await Cannon.deploy();
+    await cannon.deployed();
+    deploymentComplete('NiftyCannon', cannon.address, [] );
 
     // Bail now if deploying locally
     if (hre.network.name === 'hardhat') process.exit();
@@ -69,7 +63,6 @@ async function verifyOnEtherscan(contract) {
         console.log(`❌ Failed to verify ${contract.name} on etherscan. ${e.message}`);
     }
 }
-
 
 main()
   .then(() => process.exit(0))

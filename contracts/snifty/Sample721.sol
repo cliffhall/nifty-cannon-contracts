@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Utils.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 /**
  * @title Sample ERC721 NFT for Unit Testing
  * @author Cliff Hall
  */
-contract Sample721 is ERC721Enumerable, Utils {
+contract Sample721 is ERC721Enumerable {
 
     constructor() ERC721(TOKEN_NAME, TOKEN_SYMBOL) {}
 
@@ -19,7 +18,7 @@ contract Sample721 is ERC721Enumerable, Utils {
      * @dev Base URI for computing {tokenURI}.
      */
     function _baseURI() internal pure override returns (string memory) {
-        return 'https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/';
+        return 'ipfs://QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/';
     }
 
     /**

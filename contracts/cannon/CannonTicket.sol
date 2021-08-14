@@ -19,8 +19,8 @@ contract CannonTicket is ERC721Enumerable, CannonState {
     string public constant TOKEN_SYMBOL = "FODDER";
 
     /**
- * @dev See {IERC721Metadata-tokenURI}.
- */
+     * @dev See {IERC721Metadata-tokenURI}.
+     */
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
         return TICKET_URI;

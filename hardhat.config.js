@@ -8,12 +8,7 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
-      /*
-      forking: {
-        url: environments.rinkeby.forkNode,
-        blockNumber: environments.rinkeby.forkBlock
-      }
-      */
+      initialBaseFeePerGas: 0
     },
     rinkeby: {
       url: environments.rinkeby.txNode,
@@ -36,7 +31,7 @@ module.exports = {
   gasReporter: {
     currency: 'USD',
     enabled: true,
-    gasPrice: 100,
+    gasPrice: 82,
     coinmarketcap: environments.coinmarketcap.apiKey,
     showTimeSpent: true,
     showMethodSig: true

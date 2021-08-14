@@ -5,9 +5,12 @@ const Mode = require("../domain/Mode");
 const Volley = require("../domain/Volley");
 const Ticket = require("../domain/Ticket");
 
-describe("CannonFacet", async function() {
+describe("NiftyCannon", async function() {
 
-    let snifty, multi, cannon, accounts, sender;
+    let snifty, multi, cannon, accounts, sender, gasPrice;
+    const TICKET_URI = "ipfs://QmdEkQjAXJAjPZtJFzJZJPxnBtu2FsoDGfH7EofA5sc6vT";
+    const TOKEN_NAME = "Nifty Cannon Transferable Ticket";
+    const TOKEN_SYMBOL = "FODDER";
     const multiTokenId1 = 0;
     const multiTokenId2 = 1;
     const niftiesToMint = 50;
@@ -26,6 +29,8 @@ describe("CannonFacet", async function() {
 
         before( async function () {
 
+            // TODO: reusable deployment script for cannon and snifties
+
             // Deploy the contracts
             const Snifty = await ethers.getContractFactory("Sample721");
             snifty = await Snifty.deploy();
@@ -36,7 +41,7 @@ describe("CannonFacet", async function() {
             multi = await Multi.deploy();
             await multi.deployed();
 
-            const Cannon = await ethers.getContractFactory("CannonFacet");
+            const Cannon = await ethers.getContractFactory("NiftyCannon");
             cannon = await Cannon.deploy();
             await cannon.deployed();
 
@@ -59,111 +64,17 @@ describe("CannonFacet", async function() {
 
     })
 
-    describe("As a single diamond facet, invoked via diamond proxy", function() {
+    xdescribe("As a logic contract, invoked via proxy", function() {
 
         before( async function () {
 
-            let diamond, deployer = accounts[0];
+            // todo
 
-            const FacetCutAction = {
-                Add: 0,
-                Replace: 1,
-                Remove: 2
-            }
-
-            // Cannon Facet
-            const CannonFacet = await ethers.getContractFactory("CannonFacet");
-            const ncf = await CannonFacet.deploy();
-            await ncf.deployed();
-            const cannonSelectors = getSelectors(ncf);
-            removeItem(cannonSelectors, '0x01ffc9a7'); // EIP-165 supportsInterface() exists in
-            const cannonCut = [ncf.address, FacetCutAction.Add, cannonSelectors];
-            //console.log("CannonFacet deployed to:", ncf.address);
-
-            // Diamond Cut Facet
-            const DiamondCutFacet = await ethers.getContractFactory("DiamondCutFacet");
-            const dcf = await DiamondCutFacet.deploy();
-            await dcf.deployed();
-            const diamondCutSelectors = getSelectors(dcf);
-            const diamondCutCut = [dcf.address, FacetCutAction.Add, diamondCutSelectors];
-            //console.log("DiamondCutFacet deployed to:", dcf.address);
-
-            // Diamond Loupe Facet
-            const DiamondLoupeFacet = await ethers.getContractFactory("DiamondLoupeFacet");
-            const dlf = await DiamondLoupeFacet.deploy();
-            await dlf.deployed();
-            const diamondLoupeSelectors = getSelectors(dlf);
-            const diamondLoupeCut = [dlf.address, FacetCutAction.Add, diamondLoupeSelectors];
-            //console.log("DiamondLoupeFacet deployed to:", dlf.address);
-
-            // Ownership Facet
-            const OwnershipFacet = await ethers.getContractFactory("OwnershipFacet");
-            const osf = await OwnershipFacet.deploy();
-            const ownershipSelectors = getSelectors(osf);
-            const ownershipCut = [osf.address, FacetCutAction.Add, ownershipSelectors];
-            await osf.deployed().then(async () => {
-
-                //console.log("OwnershipFacet deployed to:", osf.address);
-
-                // Deploy Diamond with Cut, Loupe, and Ownership facets pre-cut
-                const diamondCut = [
-                    diamondCutCut,
-                    diamondLoupeCut,
-                    ownershipCut,
-                    cannonCut,
-                ]
-                const Diamond = await ethers.getContractFactory("Diamond");
-                diamond = await Diamond.deploy(diamondCut, [deployer.address]);
-                await diamond.deployed();
-
-                //console.log("Diamond deployed to:", cannon.address);
-            });
-
-            // Cannon Facet
-            cannon = await ethers.getContractAt('CannonFacet', diamond.address);
-
-            // Deploy the Sample721 contract
-            const Snifty = await ethers.getContractFactory("Sample721");
-            snifty = await Snifty.deploy();
-            await snifty.deployed();
-
-            // Pre-mint some ERC-721 NFTs to transfer
-            for (let i=0; i<niftiesToMint; i++) {
-                await snifty.mintSample(sender);
-            }
-
-            // Deploy the Sample1155 contract
-            const Multi = await ethers.getContractFactory("Sample1155");
-            multi = await Multi.deploy();
-            await multi.deployed();
-
-            // Pre-mint some ERC-1155 NFTs to transfer
-            await multi.mintSample(sender, multiTokenId1, niftiesToMint);
-            await multi.mintSample(sender, multiTokenId2, niftiesToMint);
-
-            // Set approval for Cannon to manage sender's NFTs
-            await snifty.setApprovalForAll(cannon.address, true);
-            await multi.setApprovalForAll(cannon.address, true);
-
-            function getSelectors (contract) {
-                const signatures = Object.keys(contract.interface.functions);
-                const selectors = signatures.reduce((acc, val) => {
-                    if (val !== 'init(bytes)') {
-                        acc.push(contract.interface.getSighash(val))
-                    }
-                    return acc
-                }, []);
-                return selectors.reverse();
-            }
-
-            function removeItem (array, item) {
-                array.splice(array.indexOf(item), 1)
-                return array
-            }
+            let deployer = accounts[0];
 
         });
 
-        testCannon();
+        //testCannon();
 
     })
 
@@ -171,6 +82,7 @@ describe("CannonFacet", async function() {
     function testCannon() {
 
         let ticketId = 0;
+
         context("fireVolley()", async function() {
 
             it("Should allow sender to airdrop multiple 721 NFTs to a single recipient with fireVolley", async function() {
@@ -491,6 +403,18 @@ describe("CannonFacet", async function() {
 
         });
 
+        it("Should return empty array if no volleys await", async function() {
+
+            // Recipient
+            const account = accounts[6];
+            const recipient = account.address;
+
+            // Fetch the volleys
+            const result = await cannon.connect(recipient).myVolleys();
+            expect(result.length).to.equal(0);
+
+        });
+
         it("Should emit a VolleyTransferred event upon successful airdrop", async function() {
 
             // Recipient
@@ -777,6 +701,18 @@ describe("CannonFacet", async function() {
 
         });
 
+        it("Should return empty array if no tickets await", async function() {
+
+            // Recipient
+            const account = accounts[14];
+            const recipient = account.address;
+
+            // Fetch the tickets
+            const result = await cannon.connect(recipient).myTickets();
+            expect(result.length).to.equal(0);
+
+        });
+
         it("Should burn ticket once recipient has claimed it", async function() {
 
             // Recipient
@@ -798,7 +734,7 @@ describe("CannonFacet", async function() {
             // Validate Volley
             expect(volley.isValid()).is.true;
 
-            // Execute a ticketed will-call send
+            // Execute a ticketed send
             await expect(cannon.fireVolley(volley))
                 .to
                 .emit(cannon,"VolleyTicketed")
@@ -845,6 +781,10 @@ describe("CannonFacet", async function() {
             expect(volley1.isValid()).is.true;
             expect(volley2.isValid()).is.true;
 
+            // Increment expected Ticket ID
+            ticketId++;
+            ticketId++;
+
             // Execute the will-call send
             const volleys = [volley1, volley2];
             await cannon.fireVolleys(volleys);
@@ -861,6 +801,142 @@ describe("CannonFacet", async function() {
             for (let i=0; i<volley2.tokenIds.length; i++){
                 expect(await snifty.ownerOf(volley2.tokenIds[i])).equal(recipient);
             }
+
+        });
+
+        it("Should return the appropriate value for tokenURI", async function() {
+
+            // Recipient
+            const account = accounts[17];
+            const recipient = account.address;
+
+            // Construct the second Volley
+            const volley = new Volley(
+                Mode.TICKET,
+                sender,
+                recipient,
+                snifty.address,
+                [43,44,45]
+            );
+
+            // Validate Volleys
+            expect(volley.isValid()).is.true;
+
+            // Increment expected Ticket ID
+            ticketId++;
+
+            // Execute the will-call send
+            await cannon.fireVolley(volley);
+
+            // Check token URI
+            expect(await cannon.tokenURI(ticketId)).equal(TICKET_URI);
+
+        });
+
+        it("Should revert if Cannon is not approved to transfer sender's tokens", async function() {
+
+            // Recipient
+            const account = accounts[18];
+            const recipient = account.address;
+
+            // Construct the second Volley
+            const volley = new Volley(
+                Mode.TICKET,
+                sender,
+                recipient,
+                snifty.address,
+                [46]
+            );
+
+            // Validate Volleys
+            expect(volley.isValid()).is.true;
+
+            // Revoke approval for Cannon to manage sender's NFTs
+            await snifty.setApprovalForAll(cannon.address, false);
+
+            // Execute the will-call send
+            await expect(cannon.fireVolley(volley))
+                .to
+                .revertedWith("Nifty Cannon not approved to transfer sender's NFTs");
+
+            // Restore approval
+            await snifty.setApprovalForAll(cannon.address, true);
+        });
+
+        it("Should revert if caller with no tickets to claim calls claimVolley", async function() {
+
+            // Recipient
+            const account = accounts[19];
+            const recipient = account.address;
+
+            // Execute the will-call send
+            await expect(cannon.claimVolley("0"))
+                .to
+                .revertedWith("Caller has no volleys to claim.");
+
+            // Restore approval
+            await snifty.setApprovalForAll(cannon.address, true);
+        });
+
+        it("Should revert if caller with waiting volleys provides invalid index to claimVolley", async function() {
+
+            // Recipient
+            const account = accounts[19];
+            const recipient = account.address;
+
+            // Construct the Volley
+            const volley = new Volley(
+                Mode.WILLCALL,
+                sender,
+                recipient,
+                snifty.address,
+                [46]
+            );
+
+            // Validate Volleys
+            expect(volley.isValid()).is.true;
+
+            // Increment expected Ticket ID
+            ticketId++;
+
+            // Execute the will-call send
+            await cannon.fireVolley(volley);
+
+            // Make certain that an invalid volley index reverts
+            await expect(cannon.connect(account).claimVolley(20))
+                .to
+                .revertedWith("Volley index out of bounds.")
+
+        });
+
+        it("Should revert if caller provides invalid ticket id to claimTicket", async function() {
+
+            // Recipient
+            const account = accounts[19];
+            const recipient = account.address;
+
+            // Construct the Volley
+            const volley = new Volley(
+                Mode.WILLCALL,
+                sender,
+                recipient,
+                snifty.address,
+                [18, 19, 20]
+            );
+
+            // Validate Volley
+            expect(volley.isValid()).is.true;
+
+            // Execute a will-call send
+            await expect(cannon.fireVolley(volley))
+                .to
+                .emit(cannon,"VolleyStored")
+                .withArgs(sender, recipient, snifty.address, volley.tokenIds, volley.amounts);
+
+            // Make sure an invalid ticket id reverts
+            await expect(cannon.connect(account).claimTicket(5000))
+                .to
+                .revertedWith("Invalid ticket id.");
 
         });
 

@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Utils.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 /**
  * @title Sample ERC1155 NFT for Unit Testing
  * @author Cliff Hall
  */
-contract Sample1155 is ERC1155, Utils {
+contract Sample1155 is ERC1155 {
 
     constructor() ERC1155(BASE_URI) {}
 
-    string public constant BASE_URI = 'https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/';
+    string public constant BASE_URI = 'ipfs://QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/';
 
     /**
      * Mint a Sample NFT
