@@ -3,8 +3,10 @@ pragma solidity ^0.8.0;
 
 /**
  * @title Nifty Cannon Types
- * @author Cliff Hall
+ *
  * @notice Defines the data types used by the Cannon contract
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonTypes {
 

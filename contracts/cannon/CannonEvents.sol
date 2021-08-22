@@ -3,7 +3,8 @@ pragma solidity ^0.8.0;
 
 /**
  * @title Nifty Cannon Events
- * @author Cliff Hall
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonEvents {
 

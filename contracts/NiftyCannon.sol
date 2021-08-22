@@ -7,8 +7,11 @@ import "./cannon/CannonView.sol";
 
 /**
  * @title Nifty Cannon
- * @author Cliff Hall
- * @notice Allows direct or deferred transfer of NFTs from one sender to one or more recipients.
+ *
+ * @notice Allows direct or deferred bulk transfer of NFTs from one sender
+ * to one or more recipients.
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract NiftyCannon is CannonClaim, CannonSend, CannonView {
 

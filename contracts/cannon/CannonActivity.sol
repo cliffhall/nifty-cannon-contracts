@@ -7,8 +7,10 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 /**
  * @title Nifty Cannon Activity
- * @author Cliff Hall
+ *
  * @dev Volley activities associated with airdrop, will-call, and ticket modes
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonActivity is CannonTicket, CannonEvents {
 

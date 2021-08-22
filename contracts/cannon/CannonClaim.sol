@@ -5,8 +5,10 @@ import "./CannonActivity.sol";
 
 /**
  * @title Nifty Cannon Claim Activity
- * @author Cliff Hall
+ *
  * @notice Activities related to picking up will-call volleys and claiming tickets
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonClaim is CannonActivity {
 
