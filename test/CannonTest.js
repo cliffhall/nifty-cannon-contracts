@@ -4,13 +4,13 @@ const ethers = hre.ethers;
 const Mode = require("../scripts/domain/Mode");
 const Volley = require("../scripts/domain/Volley");
 const Ticket = require("../scripts/domain/Ticket");
-
-// TODO: make reusable deployment scripts for cannon, proxy and snifties
+const {deployProxiedCannon} = require("../scripts/util/deploy-proxied-cannon");
+const {deployStandaloneCannon} = require("../scripts/util/deploy-standalone-cannon");
 
 describe("NiftyCannon", async function() {
 
     let Snifty, Multi, Cannon;
-    let snifty, multi, cannon;
+    let snifty, multi, cannon, proxy;
     let accounts, deployer, sender, recipient, recip1, recip2, anon;
     let volley, volley1, volley2, volleys, ticket, ticketId, nextTicketId, amount;
     const TICKET_URI = "ipfs://QmdEkQjAXJAjPZtJFzJZJPxnBtu2FsoDGfH7EofA5sc6vT";
@@ -63,9 +63,8 @@ describe("NiftyCannon", async function() {
 
         beforeEach( async function () {
 
-            Cannon = await ethers.getContractFactory("NiftyCannon");
-            cannon = await Cannon.deploy();
-            await cannon.deployed();
+            // Deploy Cannon
+            cannon = await deployStandaloneCannon();
 
             // Set approval for Cannon to manage sender's NFTs
             await snifty.connect(sender).setApprovalForAll(cannon.address, true);
@@ -77,15 +76,19 @@ describe("NiftyCannon", async function() {
 
     })
 
-    xdescribe("As a logic contract, invoked via proxy", function() {
+    describe("As a logic contract, invoked via proxy", function() {
 
         beforeEach( async function () {
 
-            Cannon = await ethers.getContractFactory("NiftyCannon");
-            cannon = await Cannon.deploy();
-            await cannon.deployed();
+            // Deploy Proxied Cannon
+            //
+            // N.B. first arg returned is actually the proxy, but for testing,
+            // we want 'cannon' to be the proxy. The cannon contract address
+            // and proxy args can be ignored here
+            [proxy] = await deployProxiedCannon(deployer.address);
 
-            // TODO proxy
+            // Cast NiftyCannonProxy to NiftyCannon
+            cannon = await ethers.getContractAt('NiftyCannon', proxy.address);
 
             // Set approval for Cannon to manage sender's NFTs
             await snifty.connect(sender).setApprovalForAll(cannon.address, true);
@@ -93,7 +96,7 @@ describe("NiftyCannon", async function() {
 
         });
 
-        //testCannon();
+        testCannon();
 
     })
 
@@ -841,7 +844,7 @@ describe("NiftyCannon", async function() {
                     ticketId = await cannon.connect(anon).getNextTicketId();
 
                     // Execute a ticketed send
-                    cannon.connect(sender).fireVolley(volley);
+                    await cannon.connect(sender).fireVolley(volley);
 
                     // Claim recipient's ticket
                     await expect(cannon.connect(recipient).claimTicket(ticketId))
@@ -869,7 +872,7 @@ describe("NiftyCannon", async function() {
                     ticketId = await cannon.connect(anon).getNextTicketId();
 
                     // Execute a ticketed send
-                    cannon.connect(sender).fireVolley(volley);
+                    await cannon.connect(sender).fireVolley(volley);
 
                     // Transfer from recipient 1 to recipient 2
                     await cannon.connect(recip1).transferFrom(recip1.address, recip2.address, ticketId);

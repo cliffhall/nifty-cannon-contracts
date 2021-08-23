@@ -1,27 +1,31 @@
 const hre = require("hardhat");
 const ethers = hre.ethers;
-
-let contract, contracts = [];
-const divider = "-".repeat(80);
+const {deployProxiedCannon} = require("./util/deploy-proxied-cannon");
+const {delay, deploymentComplete, verifyOnEtherscan} = require("./util/report-verify-deployments");
+const environments = require('../environments');
+const gasLimit = environments.gasLimit;
 
 async function main() {
 
     // Compile everything (in case run by node)
     await hre.run('compile');
 
+    // Deployed contracts
+    let contracts = [];
+
+    // Output script header
+    const divider = "-".repeat(80);
     console.log(`${divider}\nNifty Cannon Deployer\n${divider}`);
     console.log(`⛓  Network: ${hre.network.name}\n📅 ${new Date()}`);
 
-    const accounts = await ethers.provider.listAccounts();
+    const accounts = await ethers.getSigners();
     const deployer = accounts[0];
-    console.log("🔱 Deployer account: ", deployer ? deployer : "not found" && process.exit() );
+    console.log("🔱 Deployer account: ", deployer ? deployer.address : "not found" && process.exit() );
     console.log(divider);
 
-    // Deploy Cannon
-    const Cannon = await ethers.getContractFactory("NiftyCannon");
-    const cannon = await Cannon.deploy();
-    await cannon.deployed();
-    deploymentComplete('NiftyCannon', cannon.address, [] );
+    [cannon, proxy, proxyArgs] = await deployProxiedCannon(deployer.address, gasLimit);
+    deploymentComplete('NiftyCannon', cannon.address, [], contracts);
+    deploymentComplete('NiftyCannonProxy', proxy.address, proxyArgs, contracts);
 
     // Bail now if deploying locally
     if (hre.network.name === 'hardhat') process.exit();
@@ -39,29 +43,6 @@ async function main() {
     );
 
     console.log("\n");
-}
-
-// TODO move these functions to a shared deployment util library
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function deploymentComplete(name, address, args) {
-    contracts.push({name, address, args});
-    console.log(`✅ ${name} deployed to: ${address}`);
-}
-
-async function verifyOnEtherscan(contract) {
-    console.log(`\n📋 Verifying ${contract.name}`);
-    try {
-        await hre.run("verify:verify", {
-            address: contract.address,
-            constructorArguments: contract.args,
-        })
-    } catch (e) {
-        console.log(`❌ Failed to verify ${contract.name} on etherscan. ${e.message}`);
-    }
 }
 
 main()
