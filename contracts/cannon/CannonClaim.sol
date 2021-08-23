@@ -5,8 +5,10 @@ import "./CannonActivity.sol";
 
 /**
  * @title Nifty Cannon Claim Activity
- * @author Cliff Hall
+ *
  * @notice Activities related to picking up will-call volleys and claiming tickets
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonClaim is CannonActivity {
 
@@ -20,7 +22,7 @@ contract CannonClaim is CannonActivity {
 
         // Verify there are one or more waiting volleys and the specified index is valid
         uint256 length = willCallVolleys[msg.sender].length;
-        require(length > 0, "Caller has no volleys to accept.");
+        require(length > 0, "Caller has no volleys to claim.");
         require(_index < length, "Volley index out of bounds.");
 
         // Get the volley and mark it as AIRDROP mode so it will transfer when processed

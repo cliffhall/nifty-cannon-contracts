@@ -1,6 +1,6 @@
 const { expect } = require("chai");
-const Mode = require("../domain/Mode");
-const Volley = require("../domain/Volley");
+const Mode = require("../scripts/domain/Mode");
+const Volley = require("../scripts/domain/Volley");
 
 describe("Volley", function() {
 

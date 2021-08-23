@@ -5,7 +5,7 @@ describe("Sample721", function() {
 
     let Snifty, snifty;
     let accounts, sender, operator;
-    const tokenURIBase = "https://ipfs.io/ipfs/QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/";
+    const tokenURIBase = "ipfs://QmZr5c6BW7TdL6vwGuQNfbi8gfikUynPCncSUxXoVaGKYp/";
 
     beforeEach(async function () {
 

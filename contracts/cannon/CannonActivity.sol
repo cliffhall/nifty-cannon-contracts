@@ -7,8 +7,10 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 /**
  * @title Nifty Cannon Activity
- * @author Cliff Hall
+ *
  * @dev Volley activities associated with airdrop, will-call, and ticket modes
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonActivity is CannonTicket, CannonEvents {
 
@@ -31,8 +33,8 @@ contract CannonActivity is CannonTicket, CannonEvents {
         uint256[] memory tokenIds = _volley.tokenIds;
         uint256[] memory amounts = _volley.amounts;
         address tokenContract = _volley.tokenContract;
-        // Possible token contract interfaces
 
+        // Possible token contract interfaces
         IERC721 singleTokenContract = IERC721(tokenContract);
         IERC1155 multiTokenContract = IERC1155(tokenContract);
 

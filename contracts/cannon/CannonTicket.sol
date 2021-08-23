@@ -6,9 +6,11 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 /**
  * @title Nifty Cannon Transferable Ticket Factory
- * @author Cliff Hall
+ *
  * @notice Manages the Cannon-native NFTs that represent transferable tickets.
  * Only the current holder of a ticket can claim the associated nifties.
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonTicket is ERC721Enumerable, CannonState {
 
@@ -19,8 +21,8 @@ contract CannonTicket is ERC721Enumerable, CannonState {
     string public constant TOKEN_SYMBOL = "FODDER";
 
     /**
- * @dev See {IERC721Metadata-tokenURI}.
- */
+     * @dev See {IERC721Metadata-tokenURI}.
+     */
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
         return TICKET_URI;

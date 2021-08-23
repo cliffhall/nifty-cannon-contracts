@@ -5,11 +5,15 @@ import "./CannonActivity.sol";
 
 /**
  * @title Nifty Cannon Send functions
- * @author Cliff Hall
- * @notice Allows direct or deferred transfer of NFTs from one sender to one or more recipients.
- * TODO: Disallow volleys that target addresses behind Rampart
+ *
+ * @notice Allows direct or deferred transfer of NFTs from one
+ * sender to one or more recipients.
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonSend is CannonActivity {
+
+    // TODO: Disallow volleys that target addresses behind Rampart
 
     /**
      * @notice Fire a single Volley

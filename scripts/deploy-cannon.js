@@ -1,5 +1,6 @@
 const hre = require("hardhat");
 const ethers = hre.ethers;
+const {deployProxiedCannon} = require("./util/deploy-proxied-cannon");
 const {delay, deploymentComplete, verifyOnEtherscan} = require("./util/report-verify-deployments");
 const environments = require('../environments');
 const gasLimit = environments.gasLimit;
@@ -14,7 +15,7 @@ async function main() {
 
     // Output script header
     const divider = "-".repeat(80);
-    console.log(`${divider}\nSample NFT Deployer\n${divider}`);
+    console.log(`${divider}\nNifty Cannon Deployer\n${divider}`);
     console.log(`⛓  Network: ${hre.network.name}\n📅 ${new Date()}`);
 
     const accounts = await ethers.getSigners();
@@ -22,17 +23,9 @@ async function main() {
     console.log("🔱 Deployer account: ", deployer ? deployer.address : "not found" && process.exit() );
     console.log(divider);
 
-    // Deploy Sample 721
-    const Sample721 = await ethers.getContractFactory("Sample721");
-    const snifty = await Sample721.deploy({gasLimit});
-    await snifty.deployed();
-    deploymentComplete('Sample721', snifty.address, [], contracts );
-
-    // Deploy Sample 1155
-    const Sample1155 = await ethers.getContractFactory("Sample1155");
-    const multi = await Sample1155.deploy({gasLimit});
-    await multi.deployed();
-    deploymentComplete('Sample1155', multi.address, [], contracts );
+    [cannon, proxy, proxyArgs] = await deployProxiedCannon(deployer.address, gasLimit);
+    deploymentComplete('NiftyCannon', cannon.address, [], contracts);
+    deploymentComplete('NiftyCannonProxy', proxy.address, proxyArgs, contracts);
 
     // Bail now if deploying locally
     if (hre.network.name === 'hardhat') process.exit();
@@ -51,7 +44,6 @@ async function main() {
 
     console.log("\n");
 }
-
 
 main()
   .then(() => process.exit(0))

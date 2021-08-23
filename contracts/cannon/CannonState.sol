@@ -5,12 +5,14 @@ import "./CannonTypes.sol";
 
 /**
  * @title Nifty Cannon State
- * @author Cliff Hall
  *
  * @notice Defines the state members maintained by the CannonFacet contract
  *
- * @dev the order of items in this contract must never change, only  be added to.
- * When deployed as a Diamond, all facets view this as common storage.
+ * @dev the order of items in this contract must never change, only added to,
+ * since this will be behind a proxy and new implementations must extend the
+ * previous storage structure to avoid corruption of state data.
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonState is CannonTypes {
 

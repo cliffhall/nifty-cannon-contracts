@@ -1,5 +1,5 @@
 const { expect } = require("chai");
-const Ticket = require("../domain/Ticket");
+const Ticket = require("../scripts/domain/Ticket");
 
 describe("Ticket", function() {
 

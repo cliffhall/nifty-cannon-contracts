@@ -6,10 +6,20 @@ import "./CannonActivity.sol";
 
 /**
  * @title Nifty Cannon View Activity
- * @author Cliff Hall
+ *
  * @notice View functions that report to the caller about contract state
+ *
+ * @author Cliff Hall <cliff@futurescale.com> (https://twitter.com/seaofarrows)
  */
 contract CannonView is CannonActivity {
+
+    /**
+     * @notice Check next ticket number without incrementing.
+     * @return ticketId - number to be assigned to the next ticket
+     */
+    function getNextTicketId() public view returns (uint256 ticketId) {
+        ticketId = nextTicketNumber;
+    }
 
     /**
      * @notice Check combined count of Will-call Volleys and Tickets
