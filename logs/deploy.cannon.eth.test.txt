@@ -1,7 +1,10 @@
 --------------------------------------------------------------------------------
-Deploying. Fri Mar 19 2021 19:22:41 GMT-0400 (Eastern Daylight Time)
+💥 Nifty Cannon Deployer
 --------------------------------------------------------------------------------
+⛓ Network: eth-test
+📅 Fri Mar 19 2021 19:22:41 GMT-0400 (Eastern Daylight Time)
 🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
 ✅ CannonFacet deployed to: 0x122e91e309910e409E8402Baf67ACd0f76172810
 ✅ DiamondCutFacet deployed to: 0x0e8007431904D57CE3cF2F5C10A8245f7453aE71
 ✅ DiamondLoupeFacet deployed to: 0xe711F44172fe4362aB65E473D4CA91DF64f6CD96
@@ -62,10 +65,12 @@ Successfully verified contract Diamond on Etherscan.
 https://rinkeby.etherscan.io/address/0x4130D5e38060A55FEd2bEea05F00ab7514698a60#code
 
 --------------------------------------------------------------------------------
-Deploying. Sat Apr 10 2021 14:04:16 GMT-0400 (Eastern Daylight Time)
+💥 Nifty Cannon Deployer
 --------------------------------------------------------------------------------
-
+⛓ Network: eth-test
+📅 Sat Apr 10 2021 14:04:16 GMT-0400 (Eastern Daylight Time)
 🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
 ✅ CannonFacet deployed to: 0xBd014aA8478b2Bf0e9c16404c0C950467Ac0B36C
 ✅ DiamondCutFacet deployed to: 0xd0Bb7b59A16949e3D532f60ea968ef6cAe7E4e0C
 ✅ DiamondLoupeFacet deployed to: 0xb797aD1810B08B78Bc8FEA7cE13120f343841a15
@@ -126,11 +131,12 @@ Successfully verified contract Diamond on Etherscan.
 https://rinkeby.etherscan.io/address/0xb5Bf5793c7F4Cd8d4FB5D76B88FFd0D370F00B31#code
 
 --------------------------------------------------------------------------------
-Network: rinkeby
-Deploying. Sat Jun 05 2021 11:43:05 GMT-0400 (Eastern Daylight Time)
+💥 Nifty Cannon Deployer
 --------------------------------------------------------------------------------
-
+⛓ Network: eth-test
+📅 Sat Jun 05 2021 11:43:05 GMT-0400 (Eastern Daylight Time)
 🔱Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
 ✅ CannonFacet deployed to: 0xe82e14e192803E7358967494141BE0839edCab49
 ✅ DiamondCutFacet deployed to: 0x72eBE60b74b94745705c68290F47eFd9e70abEA9
 ✅ DiamondLoupeFacet deployed to: 0x789bc67C3AFaDc2a3775b0be6f7009c2dcb057Fa
@@ -189,3 +195,4 @@ for verification on Etherscan. Waiting for verification result...
 
 Successfully verified contract Diamond on Etherscan.
 https://rinkeby.etherscan.io/address/0x40a37fAb25ae6623C454626034325d213d54353E#code
+

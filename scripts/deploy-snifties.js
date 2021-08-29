@@ -12,13 +12,14 @@ async function main() {
     // Deployed contracts
     let contracts = [];
 
-    // Output script header
-    const divider = "-".repeat(80);
-    console.log(`${divider}\nSample NFT Deployer\n${divider}`);
-    console.log(`⛓  Network: ${hre.network.name}\n📅 ${new Date()}`);
-
+    // Get accounts
     const accounts = await ethers.getSigners();
     const deployer = accounts[0];
+
+    // Report header
+    const divider = "-".repeat(80);
+    console.log(`${divider}\n💥 Sample NFT Deployer\n${divider}`);
+    console.log(`⛓ Network: ${hre.network.name}\n📅 ${new Date()}`);
     console.log("🔱 Deployer account: ", deployer ? deployer.address : "not found" && process.exit() );
     console.log(divider);
 

@@ -3,6 +3,7 @@ const ethers = hre.ethers;
 const {deployProxiedCannon} = require("./util/deploy-proxied-cannon");
 const {delay, deploymentComplete, verifyOnEtherscan} = require("./util/report-verify-deployments");
 const environments = require('../environments');
+const network = hre.network.name;
 const gasLimit = environments.gasLimit;
 
 async function main() {
@@ -13,13 +14,14 @@ async function main() {
     // Deployed contracts
     let contracts = [];
 
-    // Output script header
-    const divider = "-".repeat(80);
-    console.log(`${divider}\nNifty Cannon Deployer\n${divider}`);
-    console.log(`⛓  Network: ${hre.network.name}\n📅 ${new Date()}`);
-
+    // Get accounts
     const accounts = await ethers.getSigners();
     const deployer = accounts[0];
+
+    // Report header
+    const divider = "-".repeat(80);
+    console.log(`${divider}\n💥 Nifty Cannon Deployer\n${divider}`);
+    console.log(`⛓ Network: ${network}\n📅 ${new Date()}`);
     console.log("🔱 Deployer account: ", deployer ? deployer.address : "not found" && process.exit() );
     console.log(divider);
 

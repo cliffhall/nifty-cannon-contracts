@@ -10,14 +10,37 @@ module.exports = {
     hardhat: {
       initialBaseFeePerGas: 0
     },
-    rinkeby: {
-      url: environments.rinkeby.txNode,
-      accounts: {mnemonic: environments.rinkeby.mnemonic},
-      gas: "auto"
+    "eth-main": {
+      gas: "auto",
+      url: environments.network['eth-main'].txNode,
+      accounts: {
+        mnemonic: environments.network['eth-main'].mnemonic
+      }
+    },
+    "eth-test": {
+      gas: "auto",
+      url: environments.network['eth-test'].txNode,
+      accounts: {
+        mnemonic: environments.network['eth-test'].mnemonic
+      }
+    },
+    "poly-main": {
+      gas: "auto",
+      url: environments.network['poly-main'].txNode,
+      accounts: {
+        mnemonic: environments.network['poly-main'].mnemonic
+      }
+    },
+    "poly-test": {
+      gas: "auto",
+      url: environments.network['poly-test'].txNode,
+      accounts: {
+        mnemonic: environments.network['poly-test'].mnemonic
+      }
     }
   },
   etherscan: {
-    apiKey: environments.etherscan.apiKey
+    apiKey: environments.apiKey.etherscan
   },
   solidity: {
     version: "0.8.3",
@@ -32,7 +55,7 @@ module.exports = {
     currency: 'USD',
     enabled: true,
     gasPrice: 82,
-    coinmarketcap: environments.coinmarketcap.apiKey,
+    coinmarketcap: environments.apiKey.coinmarketcap,
     showTimeSpent: true,
     showMethodSig: true
   },

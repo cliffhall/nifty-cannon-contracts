@@ -17,17 +17,23 @@
     "ethereum",
     "nft",
     "erc721",
-    "solidity"
+    "erc1155",
+    "solidity",
+    "airdrop"
   ],
   "scripts": {
     "build": "npx hardhat compile",
     "test": "npx hardhat test",
-    "deploy:snifties:local": "npx hardhat run --network hardhat scripts/deploy-snifties.js",
-    "deploy:snifties:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-snifties.js >> deploy.snifties.rinkeby.txt",
-    "deploy:snifties:mainnet": "npx hardhat run --network mainnet scripts/deploy-snifties.js >> deploy.snifties.mainnet.txt",
-    "deploy:cannon:local": "npx hardhat run --network hardhat scripts/deploy-cannon.js",
-    "deploy:cannon:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-cannon.js >> deploy.rinkeby.txt",
-    "deploy:cannon:mainnet": "npx hardhat run --network mainnet scripts/deploy-cannon.js >> deploy.mainnet.txt"
+    "cannon:deploy:local": "npx hardhat run --network hardhat scripts/deploy-cannon.js",
+    "cannon:deploy:poly:test": "npx hardhat run --network poly-test scripts/deploy-cannon.js >> logs/deploy.cannon.poly.test.txt",
+    "cannon:deploy:poly:main": "npx hardhat run --network poly-main scripts/deploy-cannon.js >> logs/deploy.cannon.poly.main.txt",
+    "cannon:deploy:eth:test": "npx hardhat run --network eth-test scripts/deploy-cannon.js >> logs/deploy.cannon.eth.test.txt",
+    "cannon:deploy:eth:main": "npx hardhat run --network eth-main scripts/deploy-cannon.js >> logs/deploy.cannon.eth.main.txt",
+    "snifties:deploy:local": "npx hardhat run --network hardhat scripts/deploy-snifties.js",
+    "snifties:deploy:poly:test": "npx hardhat run --network poly-test scripts/deploy-snifties.js >> logs/deploy.snifties.poly.test.txt",
+    "snifties:deploy:poly:main": "npx hardhat run --network poly-main scripts/deploy-snifties.js >> logs/deploy.snifties.poly.main.txt",
+    "snifties:deploy:eth:test": "npx hardhat run --network eth-test scripts/deploy-snifties.js >> logs/deploy.snifties.eth.test.txt",
+    "snifties:deploy:eth:main": "npx hardhat run --network eth-main scripts/deploy-snifties.js >> logs/deploy.snifties.eth.main.txt"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.0"
