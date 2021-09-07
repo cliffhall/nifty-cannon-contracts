@@ -64,4 +64,37 @@ for verification on Etherscan. Waiting for verification result...
 Successfully verified contract Sample1155 on Etherscan.
 https://rinkeby.etherscan.io/address/0xcf600e0F154F7F12Dd28433A1652D3bb5d980Df4#code
 
+--------------------------------------------------------------------------------
+💥 Sample NFT Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-test
+📅 Tue Sep 07 2021 14:02:58 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
+✅ Sample721 deployed to: 0xDE0465c698cC3C2a450223986f03ACe682a38139
+✅ Sample1155 deployed to: 0xD7D78309113a233829481AbeD5e81e89046750f9
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying Sample721
+Nothing to compile
+Compiling 1 file with 0.8.3
+Successfully submitted source code for contract
+contracts/snifty/Sample721.sol:Sample721 at 0xDE0465c698cC3C2a450223986f03ACe682a38139
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Sample721 on Etherscan.
+https://rinkeby.etherscan.io/address/0xDE0465c698cC3C2a450223986f03ACe682a38139#code
+
+📋 Verifying Sample1155
+Compiling 34 files with 0.8.3
+Compilation finished successfully
+Compiling 1 file with 0.8.3
+Successfully submitted source code for contract
+contracts/snifty/Sample1155.sol:Sample1155 at 0xD7D78309113a233829481AbeD5e81e89046750f9
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Sample1155 on Etherscan.
+https://rinkeby.etherscan.io/address/0xD7D78309113a233829481AbeD5e81e89046750f9#code
+
 

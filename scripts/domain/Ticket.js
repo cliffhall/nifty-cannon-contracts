@@ -29,8 +29,8 @@ class Ticket {
      * Get a database representation of this Ticket instance
      * @returns {object}
      */
-    toObject() {
-        return JSON.parse(JSON.stringify(this));
+    toString() {
+        return JSON.stringify(this);
     }
 
     /**
@@ -38,10 +38,7 @@ class Ticket {
      * @returns {string}
      */
     toString() {
-        const {ticketId, sender, recipient, tokenContract, tokenIds, amounts} = this;
-        return [
-            ticketId, sender, recipient, tokenContract, tokenIds, amounts
-        ].join(', ');
+        return JSON.stringify(this);
     }
 
     /**

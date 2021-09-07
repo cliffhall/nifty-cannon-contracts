@@ -196,3 +196,81 @@ for verification on Etherscan. Waiting for verification result...
 Successfully verified contract Diamond on Etherscan.
 https://rinkeby.etherscan.io/address/0x40a37fAb25ae6623C454626034325d213d54353E#code
 
+Compiling 34 files with 0.8.3
+Compilation finished successfully
+Nothing to compile
+--------------------------------------------------------------------------------
+💥 Nifty Cannon Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-test
+📅 Tue Sep 07 2021 14:17:29 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
+✅ NiftyCannon deployed to: 0xf48973772C7b89E4b54E5B9d419d138098474d5e
+✅ NiftyCannonProxy deployed to: 0x0Cf7395F7A1C59F191C00a724030AFAD4F3a6cCb
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying NiftyCannon
+Nothing to compile
+Compiling 1 file with 0.8.3
+Successfully submitted source code for contract
+contracts/NiftyCannon.sol:NiftyCannon at 0xf48973772C7b89E4b54E5B9d419d138098474d5e
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract NiftyCannon on Etherscan.
+https://rinkeby.etherscan.io/address/0xf48973772C7b89E4b54E5B9d419d138098474d5e#code
+
+📋 Verifying NiftyCannonProxy
+Compiling 34 files with 0.8.3
+Compilation finished successfully
+❌ Failed to verify NiftyCannonProxy on etherscan. More than one contract was found to match the deployed bytecode.
+Please use the contract parameter with one of the following contracts:
+  * @openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol:TransparentUpgradeableProxy
+  * contracts/NiftyCannonProxy.sol:NiftyCannonProxy
+
+For example:
+
+  hardhat verify --contract contracts/Example.sol:ExampleContract <other args>
+
+If you are running the verify subtask from within Hardhat instead:
+
+  await run("verify:verify", {
+    <other args>,
+    contract: "contracts/Example.sol:ExampleContract"
+  };
+
+
+Nothing to compile
+--------------------------------------------------------------------------------
+💥 Nifty Cannon Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-test
+📅 Tue Sep 07 2021 15:42:22 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
+✅ NiftyCannon deployed to: 0x92d3A403069838AC99aE821396A39a964a692cae
+✅ TransparentUpgradeableProxy deployed to: 0x2d24eB9bf7F8Ce775Ac2285Ba650559B8F68d89f
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying NiftyCannon
+Nothing to compile
+❌ Failed to verify NiftyCannon on etherscan. ENOENT: no such file or directory, open '/Users/cliffhall/Projects/nifty-cannon-contracts/artifacts/build-info/ef36f12c48737b2ba644cdaeabf44719.json'
+
+📋 Verifying TransparentUpgradeableProxy
+Nothing to compile
+❌ Failed to verify TransparentUpgradeableProxy on etherscan. ENOENT: no such file or directory, open '/Users/cliffhall/Projects/nifty-cannon-contracts/artifacts/build-info/ef36f12c48737b2ba644cdaeabf44719.json'
+
+
+Compiling 27 files with 0.8.3
+Compilation finished successfully
+Nothing to compile
+--------------------------------------------------------------------------------
+💥 Nifty Cannon Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-test
+📅 Tue Sep 07 2021 15:48:12 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
+Compiling 34 files with 0.8.3

@@ -1,0 +1,50 @@
+--------------------------------------------------------------------------------
+💥 Sample NFT Deployer
+--------------------------------------------------------------------------------
+⛓ Network: poly-test
+📅 Thu Sep 02 2021 11:12:55 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
+✅ Sample721 deployed to: 0x90b7041A277CAdf0d4A32316f90cF50585092374
+✅ Sample1155 deployed to: 0x903148595aDa98F30286FF1667693fFfE4190860
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying Sample721
+Nothing to compile
+Compiling 1 file with 0.8.3
+Successfully submitted source code for contract
+contracts/snifty/Sample721.sol:Sample721 at 0x90b7041A277CAdf0d4A32316f90cF50585092374
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Sample721 on Etherscan.
+https://mumbai.polygonscan.com/address/0x90b7041A277CAdf0d4A32316f90cF50585092374#code
+
+📋 Verifying Sample1155
+Compiling 34 files with 0.8.3
+Compilation finished successfully
+Compiling 1 file with 0.8.3
+Successfully submitted source code for contract
+contracts/snifty/Sample1155.sol:Sample1155 at 0x903148595aDa98F30286FF1667693fFfE4190860
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract Sample1155 on Etherscan.
+https://mumbai.polygonscan.com/address/0x903148595aDa98F30286FF1667693fFfE4190860#code
+
+
+Nothing to compile
+--------------------------------------------------------------------------------
+💥 Sample NFT Deployer
+--------------------------------------------------------------------------------
+⛓ Network: poly-test
+📅 Tue Sep 07 2021 16:14:10 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------
+Nothing to compile
+--------------------------------------------------------------------------------
+💥 Sample NFT Deployer
+--------------------------------------------------------------------------------
+⛓ Network: poly-test
+📅 Tue Sep 07 2021 16:23:36 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0xBbf9f5e693fc694519604d9Cf73F2C98742b93c9
+--------------------------------------------------------------------------------

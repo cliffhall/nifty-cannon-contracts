@@ -32,18 +32,15 @@ class Volley {
      * @returns {object}
      */
     toObject() {
-        return JSON.parse(JSON.stringify(this));
+        return JSON.parse(this.toString());
     }
 
     /**
      * Get a string representation of this Volley instance
-     * @returns {boolean}
+     * @returns {string}
      */
     toString() {
-        const {mode, sender, recipient, tokenContract, tokenIds, amounts} = this;
-        return [
-            mode, sender, recipient, tokenContract, tokenIds, amounts
-        ].join(', ');
+        return JSON.stringify(this);
     }
 
     /**
