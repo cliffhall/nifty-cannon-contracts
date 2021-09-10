@@ -3,9 +3,19 @@
 
 Make it rain NFTs!
 
-Send multiple [ERC-721](https://eips.ethereum.org/EIPS/eip-721) tokens to multiple Ethereum addresses. 
+Send multiple [ERC-721](https://eips.ethereum.org/EIPS/eip-721) tokens to one or more Ethereum addresses. 
 
-Send amounts of multiple [ERC-1155](https://eips.ethereum.org/EIPS/eip-1155) tokens to multiple Ethereum addresses.
+Send amounts of multiple [ERC-1155](https://eips.ethereum.org/EIPS/eip-1155) tokens to one or more Ethereum addresses.
+
+## Status
+* Airdrops working and unit tested
+* Will-call volleys working and unit tested
+* Transferable tickets working and unit tested
+* ERC-721 support working and unit tested
+* ERC-1155 support working and unit tested
+* Transparent Upgradeable Proxy working and unit tested
+* Deployed to Rinkeby Testnet and tested with community recipients
+* Deployed to Ethereum Mainnet
 
 ## Features
 * Airdrop mode 
@@ -26,15 +36,14 @@ Send amounts of multiple [ERC-1155](https://eips.ethereum.org/EIPS/eip-1155) tok
 * Rampart (Not in MVP)
   - anyone can register to opt out of receiving airdrops
 
-## Status
-* Airdrops working and unit tested
-* Will-call volleys working and unit tested
-* Transferable tickets working and unit tested
-* ERC-721 support working and unit tested
-* ERC-1155 support working and unit tested
+### Nifty Cannon Implementation Unit Test Output
+![Nifty Cannon Implementation Unit Test Output](images/Unit_Test_Output_01.png)
 
-### Unit Test Output
-![Unit Test Output](images/Unit_Test_Output.png)
+### Nifty Cannon Proxy Unit Test Output
+![Nifty Cannon Proxy Unit Test Output](images/Unit_Test_Output_02.png)
+
+### Nifty Cannon Domain Entity Unit Test Output
+![Nifty Cannon Domain Entity Unit Test Output](images/Unit_Test_Output_03.png)
 
 ### Unit Test Gas Report
 ![Unit Test Gas](images/Unit_Test_Gas.png)
@@ -55,8 +64,6 @@ npm install
 ### Configure Environment
 Create a file called `environments.js` with 
 - The following info for each Ethereum network environment.
-  * `forkNode`: the url endpoint for forking the ethereum network
-  * `forkBlock`: the block to fork the network ethereum from
   * `txNode`: the endpoint for sending ethereum transactions
   * `mnemonic`: a valid ethereum HD wallet seed phrase
 
@@ -75,8 +82,6 @@ module.exports = {
   },
 
   "rinkeby": {
-        "forkNode": "https://eth-rinkeby.alchemyapi.io/v2/<YOUR_ALCHEMY_API_KEY>",
-        "forkBlock": 7507432,
         "txNode": "https://rinkeby.infura.io/v3/<YOUR_INFURA_API_KEY>",
         "mnemonic": "<YOUR_UNIQUE_TWELVE_WORD_WALLET_SEED_PHRASE>"
     }
@@ -100,8 +105,6 @@ This builds the contracts and runs the unit tests.
 This deploys the built contracts to Rinkeby
 
 ```npm run deploy:rinkeby```
-
-
 
 ### Verify deployed contract with etherscan
 ```npx hardhat verify --network [rinkeby|mainnet] DEPLOYED_CONTRACT_ADDRESS```

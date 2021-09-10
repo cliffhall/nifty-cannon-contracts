@@ -26,8 +26,8 @@ async function main() {
     console.log(divider);
 
     [cannon, proxy, proxyArgs] = await deployProxiedCannon(deployer.address, gasLimit);
-    deploymentComplete('NiftyCannon', cannon.address, [], contracts);
-    deploymentComplete('NiftyCannonProxy', proxy.address, proxyArgs, contracts);
+    deploymentComplete('contracts/NiftyCannon.sol:NiftyCannon', cannon.address, [], contracts);
+    deploymentComplete('contracts/NiftyCannonProxy.sol:NiftyCannonProxy', proxy.address, proxyArgs, contracts);
 
     // Bail now if deploying locally
     if (hre.network.name === 'hardhat') process.exit();

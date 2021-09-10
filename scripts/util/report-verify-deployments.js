@@ -27,6 +27,7 @@ async function verifyOnEtherscan(contract) {
         await hre.run("verify:verify", {
             address: contract.address,
             constructorArguments: contract.args,
+            contract: contract.name
         })
     } catch (e) {
         console.log(`❌ Failed to verify ${contract.name} on etherscan. ${e.message}`);

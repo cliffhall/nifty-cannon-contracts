@@ -1,0 +1,118 @@
+--------------------------------------------------------------------------------
+💥 Nifty Cannon Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-main
+📅 Thu Sep 09 2021 20:35:51 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0x068d9f17fBF0CCBF39BD8DA421731Fe86986bD3a
+--------------------------------------------------------------------------------
+✅ NiftyCannon deployed to: 0xda6fd303875d24c385cb70f6f612f2d51dc942fe
+✅ NiftyCannonProxy deployed to: 0xdE7BF3B8e8E6def078Ee9E8138773BED0B93755D
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying NiftyCannon
+Nothing to compile
+Compiling 1 file with 0.8.3
+Successfully submitted source code for contract
+contracts/NiftyCannon.sol:NiftyCannon at 0xda6fd303875d24c385cb70f6f612f2d51dc942fe
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract NiftyCannon on Etherscan.
+https://etherscan.io/address/0xda6fd303875d24c385cb70f6f612f2d51dc942fe#code
+
+📋 Verifying NiftyCannonProxy
+Compiling 34 files with 0.8.3
+Compilation finished successfully
+❌ Failed to verify NiftyCannonProxy on etherscan. More than one contract was found to match the deployed bytecode.
+Please use the contract parameter with one of the following contracts:
+  * @openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol:TransparentUpgradeableProxy
+  * contracts/NiftyCannonProxy.sol:NiftyCannonProxy
+
+For example:
+
+  hardhat verify --contract contracts/Example.sol:ExampleContract <other args>
+
+If you are running the verify subtask from within Hardhat instead:
+
+  await run("verify:verify", {
+    <other args>,
+    contract: "contracts/Example.sol:ExampleContract"
+  };
+
+
+Compiling 34 files with 0.8.3
+Compilation finished successfully
+Nothing to compile
+--------------------------------------------------------------------------------
+💥 Nifty Cannon Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-main
+📅 Thu Sep 09 2021 21:00:55 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0x068d9f17fBF0CCBF39BD8DA421731Fe86986bD3a
+--------------------------------------------------------------------------------
+✅ NiftyCannon deployed to: 0xda6fd303875d24c385cb70f6f612f2d51dc942fe
+✅ NiftyCannonProxy deployed to: 0xdE7BF3B8e8E6def078Ee9E8138773BED0B93755D
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying NiftyCannon
+Nothing to compile
+Compiling 1 file with 0.8.3
+❌ Failed to verify NiftyCannon on etherscan. Contract source code already verified
+
+📋 Verifying NiftyCannonProxy
+Compiling 34 files with 0.8.3
+Compilation finished successfully
+❌ Failed to verify NiftyCannonProxy on etherscan. More than one contract was found to match the deployed bytecode.
+Please use the contract parameter with one of the following contracts:
+  * @openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol:TransparentUpgradeableProxy
+  * contracts/NiftyCannonProxy.sol:NiftyCannonProxy
+
+For example:
+
+  hardhat verify --contract contracts/Example.sol:ExampleContract <other args>
+
+If you are running the verify subtask from within Hardhat instead:
+
+  await run("verify:verify", {
+    <other args>,
+    contract: "contracts/Example.sol:ExampleContract"
+  };
+
+
+--------------------------------------------------------------------------------
+💥 Nifty Cannon Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-main
+📅 Thu Sep 09 2021 21:13:43 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0x068d9f17fBF0CCBF39BD8DA421731Fe86986bD3a
+--------------------------------------------------------------------------------
+✅ NiftyCannon deployed to: 0xda6fd303875d24c385cb70f6f612f2d51dc942fe
+✅ NiftyCannonProxy deployed to: 0xdE7BF3B8e8E6def078Ee9E8138773BED0B93755D
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
+
+📋 Verifying NiftyCannon
+Nothing to compile
+❌ Failed to verify NiftyCannon on etherscan. A valid fully qualified name was expected. Fully qualified names look like this: "contracts/AContract.sol:TheContract"
+Instead, this name was received: NiftyCannon
+
+📋 Verifying contracts/NiftyCannonProxy.sol:NiftyCannonProxy
+Nothing to compile
+Compiling 1 file with 0.8.3
+Successfully submitted source code for contract
+contracts/NiftyCannonProxy.sol:NiftyCannonProxy at 0xdE7BF3B8e8E6def078Ee9E8138773BED0B93755D
+for verification on Etherscan. Waiting for verification result...
+
+❌ Failed to verify contracts/NiftyCannonProxy.sol:NiftyCannonProxy on etherscan. Failure during etherscan status polling. The verification may still succeed but should be checked manually.
+Endpoint URL: https://api.etherscan.io/api?apikey=ZB4SRB4A2KZ9J55AEZNA396PRNV7ZC37GY&module=contract&action=checkverifystatus&guid=vdvr6k2x3nm38amm97gu7qmzsctlbyqfdxrchkbi1vqjcx2jzc
+Reason: The HTTP server response is not ok. Status code: 502 Response text: <html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+
+
