@@ -9,13 +9,11 @@ const {deployStandaloneCannon} = require("../scripts/util/deploy-standalone-cann
 
 describe("NiftyCannon", async function() {
 
-    let Snifty, Multi, Cannon;
+    let Snifty, Multi;
     let snifty, multi, cannon, proxy;
     let accounts, deployer, sender, recipient, recip1, recip2, anon;
     let volley, volley1, volley2, volleys, ticket, ticketId, nextTicketId, amount;
     const TICKET_URI = "ipfs://QmdEkQjAXJAjPZtJFzJZJPxnBtu2FsoDGfH7EofA5sc6vT";
-    const TOKEN_NAME = "Nifty Cannon Transferable Ticket";
-    const TOKEN_SYMBOL = "FODDER";
     const multiTokenId1 = 0;
     const multiTokenId2 = 1;
     const niftiesToMint = 50;
@@ -51,9 +49,6 @@ describe("NiftyCannon", async function() {
         // Pre-mint some ERC-1155 NFTs to transfer
         await multi.mintSample(sender.address, multiTokenId1, niftiesToMint);
         await multi.mintSample(sender.address, multiTokenId2, niftiesToMint);
-
-        // Initial ticket id //TODO: resolve
-        ticketId = 0;
 
         // Set amount to transfer
         amount = 10;
@@ -191,7 +186,10 @@ describe("NiftyCannon", async function() {
                 // Validate Volley
                 expect(volley.isValid()).is.true;
 
-                // Execute a will-call send
+                // Get next ticket id
+                ticketId = await cannon.getNextTicketId();
+
+                // Execute a ticketed send
                 await expect(cannon.connect(sender).fireVolley(volley))
                     .to
                     .emit(cannon, "VolleyTicketed")
@@ -922,7 +920,7 @@ describe("NiftyCannon", async function() {
 
             context("claimAllTickets()", async function() {
 
-                it("Should allow caller to pickup multiple tickets", async function () {
+                it("Should allow caller to claim multiple tickets", async function () {
 
                     // Construct the first Volley
                     volley1 = new Volley(

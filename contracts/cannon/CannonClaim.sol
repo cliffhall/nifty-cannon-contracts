@@ -65,6 +65,7 @@ contract CannonClaim is CannonActivity {
         volley.recipient = msg.sender;
         volley.tokenContract = transferableTickets[_ticketId].tokenContract;
         volley.tokenIds = transferableTickets[_ticketId].tokenIds;
+        volley.amounts = transferableTickets[_ticketId].amounts;
 
         // Burn the ticket
         burnTicket(_ticketId);
