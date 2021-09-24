@@ -16,13 +16,13 @@ const {deployStandaloneCannon} = require("./deploy-standalone-cannon")
 async function deployProxiedCannon (admin, gasLimit) {
 
     // Deployed cannon, but failed during deployment of proxy
-    //const accounts = await ethers.getSigners();
-    //const deployer = accounts[0];
-    //const cannon = await ethers.getContractAt("NiftyCannon","0xda6fd303875d24c385cb70f6f612f2d51dc942fe", deployer);
+    const accounts = await ethers.getSigners();
+    const deployer = accounts[0];
+    const cannon = await ethers.getContractAt("NiftyCannon","0xc4184a4455d561249a29a570a1c35aebe733cfae", deployer);
     //const proxy = await ethers.getContractAt("contracts/NiftyCannonProxy.sol:NiftyCannonProxy","0xdE7BF3B8e8E6def078Ee9E8138773BED0B93755D", deployer);
 
     // Deploy Cannon
-    const cannon = await deployStandaloneCannon(gasLimit);
+    //const cannon = await deployStandaloneCannon(gasLimit);
 
     // Deploy Proxy
     const proxyArgs = [cannon.address, admin, []]

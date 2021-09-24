@@ -115,4 +115,35 @@ Reason: The HTTP server response is not ok. Status code: 502 Response text: <htm
 </html>
 
 
+--------------------------------------------------------------------------------
+💥 Nifty Cannon Deployer
+--------------------------------------------------------------------------------
+⛓ Network: eth-main
+📅 Wed Sep 22 2021 16:47:19 GMT-0400 (Eastern Daylight Time)
+🔱 Deployer account:  0x849DA3ea5afA16B37196Cabc3A793d7971ae9256
+--------------------------------------------------------------------------------
+✅ contracts/NiftyCannon.sol:NiftyCannon deployed to: 0xc4184a4455d561249a29a570a1c35aebe733cfae
+✅ contracts/NiftyCannonProxy.sol:NiftyCannonProxy deployed to: 0x898f42d836376ec3d4B24FE3B23d9dc16889bed7
+⏲ Pause one minute, allowing deployments to propagate to Etherscan backend...
+🔍 Verifying contracts on Etherscan...
 
+📋 Verifying contracts/NiftyCannon.sol:NiftyCannon
+Nothing to compile
+Compiling 1 file with 0.8.4
+Successfully submitted source code for contract
+contracts/NiftyCannon.sol:NiftyCannon at 0xc4184a4455d561249a29a570a1c35aebe733cfae
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract NiftyCannon on Etherscan.
+https://etherscan.io/address/0xc4184a4455d561249a29a570a1c35aebe733cfae#code
+
+📋 Verifying contracts/NiftyCannonProxy.sol:NiftyCannonProxy
+Compiling 34 files with 0.8.4
+Compilation finished successfully
+Compiling 1 file with 0.8.4
+Successfully submitted source code for contract
+contracts/NiftyCannonProxy.sol:NiftyCannonProxy at 0x898f42d836376ec3d4B24FE3B23d9dc16889bed7
+for verification on Etherscan. Waiting for verification result...
+
+Successfully verified contract NiftyCannonProxy on Etherscan.
+https://etherscan.io/address/0x898f42d836376ec3d4B24FE3B23d9dc16889bed7#code
